@@ -1,15 +1,22 @@
+import os
 from flask import Flask
 from app.extensions import db, migrate
 from config import Config
 
 def create_app():
-    app = Flask(__name__)
+    base_dir = os.path.abspath(os.path.dirname(__file__))
+    template_dir = os.path.abspath(
+        os.path.join(base_dir, "..", "frontend", "templates")
+    )
+
+    app = Flask(__name__, template_folder=template_dir)
     app.config.from_object(Config)
 
+    # DB
     db.init_app(app)
     migrate.init_app(app, db)
 
-    # Modelle importieren (WICHTIG für Migrationen)
+    # Modelle (für Alembic / Mapper)
     from app.models.user import User
     from app.models.group import Group
     from app.models.tag import Tag
@@ -23,8 +30,12 @@ def create_app():
     from app.models.audit_log import AuditLog
     from app.models.report import Report
 
-    @app.route("/")
-    def index():
-        return "Lerngruppentool läuft ✅"
+    # Blueprint
+    from app.routes.groups import groups_bp
+    app.register_blueprint(groups_bp)
+
+    # ✅ RICHTIGES DEBUGGING
+    print("🔎 Flask template_folder:", app.template_folder)
+    print("🔎 Template folder exists:", os.path.exists(app.template_folder))
 
     return app
