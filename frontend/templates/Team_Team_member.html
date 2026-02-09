@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LerngruppenTool</title>
+  <link rel="stylesheet" href="/frontend/static/css/Team_Team_members.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap"
+    rel="stylesheet">
+</head>
+
+<body>
+
+  <div class="app-container">
+    <header class="header">
+      <div class="top-bar">
+        <span class="account-circle-icon-1">👤</span>
+        <a href="/Login"><button class="logout-btn">Ausloggen</button></a>
+      </div>
+      <h1 class="lerngruppentool-1">LerngruppenTool</h1>
+      <div class="navigation">
+        <a href="#" class="back-link"><span class="arrow">‹</span> Zurück</a>
+        <h2 class="teamname-1">Teamname</h2>
+      </div>
+    </header>
+
+    <hr class="horizontal-line-1">
+
+    <nav class="tabs">
+      <button class="rectangle-1 heading-1 active">Teammitglieder</button>
+      <button class="rectangle-2 heading-2" onclick="location.href='/Chat'">Chat</button>
+      <button class="rectangle-3 heading-3" onclick="location.href='/Einstellungen'">Einstellungen</button>
+      <button onclick="location.href='/register'"></button>
+    </nav>
+
+    <main class="content-box rectangle-white-shadow">
+      <h3 class="teammitglieder">Teammitglieder</h3>
+      <p class="anzahl-4">Anzahl: 4</p>
+
+      <div class="search-container">
+        <input type="text" class="search-1" placeholder="🔍 Person hinzufügen..">
+      </div>
+
+      <div class="member-list">
+        <div class="rectangle-4 member-card">
+          <span class="account-circle-icon-2">👤</span>
+          <a href="#" class="link-1">Ange Köchner (Ich)</a>
+          <span class="tag-5">Admin</span>
+          <span class="delete-forever-icon-1">🗑️</span>
+        </div>
+
+        <div class="rectangle-5 member-card">
+          <span class="account-circle-icon-3">👤</span>
+          <a href="#" class="link-2">Oliver Enns</a>
+          <div class="tag-6 icon-btn"><span>⊕</span></div>
+          <span class="delete-forever-icon-2">🗑️</span>
+        </div>
+
+        <div class="rectangle-6 member-card">
+          <span class="account-circle-icon-4">👤</span>
+          <a href="#" class="link-3">Sebastian Prang</a>
+          <div class="tag-7 icon-btn"><span>⊕</span></div>
+          <span class="delete-forever-icon-3">🗑️</span>
+        </div>
+
+        <div class="rectangle-7 member-card">
+          <span class="account-circle-icon-5">👤</span>
+          <a href="#" class="link-4">Michael Fischer</a>
+          <div class="tag-8 icon-btn"><span>⊕</span></div>
+          <span class="delete-forever-icon-4">🗑️</span>
+        </div>
+      </div>
+    </main>
+
+    <section class="requests-section rectangle-white-shadow">
+      <h3 class="anfragen">Anfragen</h3>
+      <div class="rectangle-8 member-card">
+        <span class="account-circle-icon-6">👤</span>
+        <a href="#" class="link-5">Somebody</a>
+        <span class="check-circle-icon-1">✔️</span>
+        <span class="delete-forever-icon-5">🗑️</span>
+      </div>
+    </section>
+  </div>
+
+</body>
+
+</html>
