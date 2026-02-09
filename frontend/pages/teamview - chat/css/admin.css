@@ -1,0 +1,598 @@
+/* -------------------------------------- */
+/* 1. RESET & BASE STYLES */
+/* -------------------------------------- */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Source Sans 3", sans-serif;
+    background: rgb(245, 245, 245);
+    min-height: 100vh;
+    display: flex;
+    padding: 1rem;
+}
+
+.page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* -------------------------------------- */
+/* 2. LAYOUT – MOBILE FIRST */
+/* -------------------------------------- */
+.container {
+    width: 100%;
+    max-width: 28rem;
+    background: rgb(255, 255, 255);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* -------------------------------------- */
+/* 3. HEADER */
+/* -------------------------------------- */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.header-left,
+.header-right {
+    flex: 1;
+}
+
+.header-left {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.header-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.account-circle-icon {
+    width: 1.875rem;
+    height: 1.875rem;
+    fill: rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+.page-title {
+    flex: 2;
+    color: rgb(0, 0, 0);
+    font-weight: 700;
+    font-size: 1.375rem;
+    text-align: center;
+}
+
+.logout-button {
+    height: 2rem;
+    padding: 0rem 0.75rem;
+    background: rgb(214, 214, 214);
+    border: none;
+    border-radius: 0.4375rem;
+    color: rgb(68, 68, 68);
+    font-weight: 500;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.logout-button:hover {
+    background: rgb(194, 194, 194);
+}
+
+/* -------------------------------------- */
+/* 4. NAVIGATION */
+/* -------------------------------------- */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.nav-left,
+.nav-right {
+    flex: 1;
+}
+
+.nav-left {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.back-link {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: rgb(3, 122, 255);
+    font-family: "Helvetica", sans-serif;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.back-link:hover {
+    text-decoration: underline;
+}
+
+.back-icon {
+    width: 0.6rem;
+    height: 1rem;
+    fill: none;
+    stroke: rgb(3, 122, 255);
+    stroke-width: 2;
+}
+
+.section-title {
+    flex: 2;
+    color: rgb(0, 0, 0);
+    font-size: 1.375rem;
+    text-align: center;
+}
+
+.divider {
+    width: 100%;
+    height: 0.0625rem;
+    border: none;
+    border-top: 0.0625rem solid rgb(214, 214, 214);
+    margin: 0.5rem 0;
+}
+
+/* -------------------------------------- */
+/* 5. SECTION HEADINGS */
+/* -------------------------------------- */
+.section-heading {
+    color: rgb(0, 0, 0);
+    font-weight: 500;
+    font-size: 1.25rem;
+    margin-bottom: 1rem;
+}
+
+/* -------------------------------------- */
+/* 6. REPORTS SECTION */
+/* -------------------------------------- */
+.reports-section {
+    margin: 1rem 0;
+}
+
+.reports-container {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+
+    /* Scrollbox für genau 3 Reports */
+    max-height: calc(3 * 12rem);
+    overflow-y: auto;
+    padding-right: 0.5rem;
+}
+
+.reports-container::-webkit-scrollbar {
+    width: 0.4rem;
+}
+
+.reports-container::-webkit-scrollbar-thumb {
+    background: rgb(200, 200, 200);
+    border-radius: 1rem;
+}
+
+.reports-container::-webkit-scrollbar-thumb:hover {
+    background: rgb(170, 170, 170);
+}
+
+.report-card {
+    background: rgb(255, 255, 255);
+    border: 0.0625rem solid rgba(0, 0, 0, 0.3);
+    border-radius: 0.75rem;
+    padding: 1rem;
+    box-shadow: 0rem 0.125rem 0.5rem rgba(0, 0, 0, 0.05);
+}
+
+.report-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.report-user {
+    font-weight: 500;
+    font-size: 0.95rem;
+    color: rgb(68, 68, 68);
+}
+
+.report-date {
+    font-size: 0.8rem;
+    color: rgb(146, 146, 146);
+}
+
+.report-team {
+    font-size: 0.85rem;
+    color: rgb(96, 96, 96);
+    margin-bottom: 0.75rem;
+}
+
+.report-message {
+    background: rgb(245, 245, 245);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    color: rgb(68, 68, 68);
+    margin-bottom: 0.75rem;
+    line-height: 1.4;
+}
+
+.filtered-word {
+    color: rgb(220, 53, 69);
+    font-weight: 600;
+}
+
+.report-actions {
+    display: flex;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+.action-button {
+    flex: 1;
+    min-width: 5rem;
+    height: 2rem;
+    border: none;
+    border-radius: 0.4375rem;
+    font-weight: 500;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.action-button.dismiss {
+    background: rgb(214, 214, 214);
+    color: rgb(68, 68, 68);
+}
+
+.action-button.dismiss:hover {
+    background: rgb(194, 194, 194);
+}
+
+.action-button.warn {
+    background: rgb(255, 193, 7);
+    color: rgb(33, 33, 33);
+}
+
+.action-button.warn:hover {
+    background: rgb(235, 173, 0);
+}
+
+.action-button.ban {
+    background: rgb(220, 53, 69);
+    color: rgb(255, 255, 255);
+}
+
+.action-button.ban:hover {
+    background: rgb(200, 33, 49);
+}
+
+/* -------------------------------------- */
+/* 7. WORDFILTER SECTION */
+/* -------------------------------------- */
+.wordfilter-section {
+    margin: 1rem 0 2rem 0;
+}
+
+.wordfilter-container {
+    background: rgb(255, 255, 255);
+    border: 0.0625rem solid rgba(0, 0, 0, 0.3);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.wordfilter-add-box .add-row {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.word-input {
+    flex: 1;
+    height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+    border: 0.078125rem solid rgb(96, 96, 96);
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    color: rgb(68, 68, 68);
+}
+
+.word-input:focus {
+    outline: none;
+    border-color: rgb(139, 81, 245);
+}
+
+.add-word-button {
+    height: 2.5rem;
+    padding: 0 1rem;
+    background: rgb(3, 122, 255);
+    border: none;
+    border-radius: 0.4375rem;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.add-word-button:hover {
+    background: rgb(2, 102, 215);
+}
+
+.wordfilter-list-box {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.list-title {
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: rgb(68, 68, 68);
+}
+
+.word-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.word-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgb(245, 245, 245);
+    padding: 0.75rem;
+    border-radius: 0.5rem;
+    font-size: 1rem;
+    color: rgb(68, 68, 68);
+}
+
+.remove-word-button {
+    background: rgb(220, 53, 69);
+    border: none;
+    border-radius: 0.4375rem;
+    color: white;
+    padding: 0.4rem 0.75rem;
+    cursor: pointer;
+    font-size: 0.85rem;
+    transition: background 0.3s ease;
+}
+
+.remove-word-button:hover {
+    background: rgb(200, 33, 49);
+}
+
+/* -------------------------------------- */
+/* 8. ADMIN TRANSFER SECTION */
+/* -------------------------------------- */
+.admin-transfer-section {
+    margin: 1rem 0 2rem 0;
+}
+
+.transfer-container {
+    background: rgb(255, 255, 255);
+    border: 0.0625rem solid rgba(0, 0, 0, 0.3);
+    border-radius: 0.75rem;
+    padding: 1.5rem;
+}
+
+.transfer-warning {
+    background: rgb(255, 243, 205);
+    border-left: 0.25rem solid rgb(255, 193, 7);
+    padding: 1rem;
+    border-radius: 0.5rem;
+    font-size: 0.9rem;
+    color: rgb(68, 68, 68);
+    margin-bottom: 1.5rem;
+    line-height: 1.5;
+}
+
+.transfer-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+.form-label {
+    font-weight: 500;
+    font-size: 1rem;
+    color: rgb(68, 68, 68);
+}
+
+.user-select {
+    width: 100%;
+    height: 2.8125rem;
+    padding: 0.5rem 0.75rem;
+    background: rgb(255, 255, 255);
+    border: 0.078125rem solid rgb(96, 96, 96);
+    border-radius: 0.25rem;
+    font-size: 1rem;
+    color: rgb(68, 68, 68);
+    cursor: pointer;
+}
+
+.user-select:focus {
+    outline: none;
+    border-color: rgb(139, 81, 245);
+}
+
+.confirmation-box {
+    margin: 0.5rem 0;
+}
+
+.checkbox-label {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-size: 0.9rem;
+    color: rgb(68, 68, 68);
+    cursor: pointer;
+}
+
+.confirmation-checkbox {
+    width: 1.2rem;
+    height: 1.2rem;
+    cursor: pointer;
+}
+
+.transfer-button {
+    width: 100%;
+    height: 2.8125rem;
+    background: rgb(220, 53, 69);
+    border: none;
+    border-radius: 0.4375rem;
+    color: rgb(255, 255, 255);
+    font-weight: 500;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 0.5rem;
+}
+
+.transfer-button:hover:not(:disabled) {
+    background: rgb(200, 33, 49);
+}
+
+.transfer-button:disabled {
+    background: rgb(214, 214, 214);
+    color: rgb(146, 146, 146);
+    cursor: not-allowed;
+}
+
+/* -------------------------------------- */
+/* 9. MEDIA QUERIES */
+/* -------------------------------------- */
+
+/* TABLET – ab 768px */
+@media (min-width: 768px) {
+    .container {
+        max-width: 45rem;
+        padding: 2rem;
+    }
+
+    .page-title {
+        font-size: 1.625rem;
+    }
+
+    .logout-button {
+        font-size: 1rem;
+        padding: 0rem 1rem;
+    }
+
+    .back-link {
+        font-size: 1.125rem;
+    }
+
+    .section-title {
+        font-size: 1.625rem;
+    }
+
+    .section-heading {
+        font-size: 1.5rem;
+    }
+
+    .report-user {
+        font-size: 1rem;
+    }
+
+    .report-date {
+        font-size: 0.875rem;
+    }
+
+    .report-team {
+        font-size: 0.9rem;
+    }
+
+    .report-message {
+        font-size: 0.95rem;
+    }
+
+    .action-button {
+        font-size: 0.9rem;
+        height: 2.25rem;
+    }
+
+    .transfer-warning {
+        font-size: 0.95rem;
+    }
+
+    .form-label {
+        font-size: 1.05rem;
+    }
+
+    .user-select {
+        font-size: 1.05rem;
+    }
+
+    .checkbox-label {
+        font-size: 0.95rem;
+    }
+}
+
+/* LAPTOP – ab 1024px */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 60rem;
+        padding: 2.5rem;
+    }
+
+    .account-circle-icon {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+
+    .page-title {
+        font-size: 1.875rem;
+    }
+
+    .logout-button {
+        height: 2.25rem;
+        font-size: 1.05rem;
+    }
+
+    .section-heading {
+        font-size: 1.75rem;
+    }
+
+    .reports-container {
+        gap: 1.25rem;
+    }
+
+    .report-card {
+        padding: 1.25rem;
+    }
+
+    .action-button {
+        min-width: 6rem;
+    }
+}
+
+/* LARGE DESKTOP – ab 1440px */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 70rem;
+        padding: 3rem;
+    }
+
+    .section-heading {
+        font-size: 2rem;
+    }
+}
