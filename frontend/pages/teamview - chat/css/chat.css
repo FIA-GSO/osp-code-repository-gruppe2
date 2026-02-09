@@ -1,0 +1,343 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Source Sans 3", sans-serif;
+    background: rgb(245, 245, 245);
+    min-height: 100vh;
+    display: flex;
+    padding: 1rem;
+}
+
+.page {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+/* MOBILE FIRST - Base Styles */
+.container {
+    width: 100%;
+    max-width: 28rem;
+    background: rgb(255, 255, 255);
+    padding: 1.5rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+/* Header */
+.header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.header-left,
+.header-right {
+    flex: 1;
+}
+
+.header-left {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.header-right {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.account-circle-icon-1 {
+    width: 1.875rem;
+    height: 1.875rem;
+    fill: rgb(0, 0, 0);
+    cursor: pointer;
+}
+
+.lerngruppentool-1 {
+    flex: 2;
+    color: rgb(0, 0, 0);
+    font-family: "Source Sans 3";
+    font-weight: 700;
+    font-size: 1.375rem;
+    text-align: center;
+}
+
+.button-5 {
+    height: 2rem;
+    padding: 0rem 0.75rem;
+    background: rgb(214, 214, 214);
+    border: none;
+    border-radius: 0.4375rem;
+    color: rgb(68, 68, 68);
+    font-family: "Source Sans 3";
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.button-5:hover {
+    background: rgb(194, 194, 194);
+}
+
+/* Navigation */
+.navigation {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+}
+
+.nav-left,
+.nav-right {
+    flex: 1;
+}
+
+.nav-left {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.nav-right {
+    flex: 1;
+}
+
+.object-1 {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+    color: rgb(3, 122, 255);
+    font-family: "Helvetica", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.object-1:hover {
+    text-decoration: underline;
+}
+
+.plain-svg-1 {
+    width: 0.6rem;
+    height: 1rem;
+    fill: none;
+    stroke: rgb(3, 122, 255);
+    stroke-width: 2;
+}
+
+.teamname-1 {
+    flex: 2;
+    color: rgb(0, 0, 0);
+    font-family: "Source Sans 3";
+    font-weight: 400;
+    font-size: 1.375rem;
+    text-align: center;
+}
+/* Tabs */
+.tabs {
+    display: flex;
+    justify-content: center;
+    gap: 0.75rem;
+    margin: 0.75rem 0;
+}
+
+.tab-button {
+    height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgb(224, 224, 224);
+    border: 0.125rem solid transparent;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-button.active {
+    border-color: rgb(139, 81, 245);
+}
+
+.tab-button:hover:not(.active) {
+    background: rgb(204, 204, 204);
+}
+
+.heading-1,
+.heading-2 {
+    color: rgba(33, 33, 33, 0.87);
+    font-family: "Roboto", sans-serif;
+    font-weight: 400;
+    font-size: 0.8rem;
+    text-align: center;
+    white-space: nowrap;
+}
+
+/* Chat Section */
+.chat {
+    color: rgb(0, 0, 0);
+    font-family: "Source Sans 3";
+    font-weight: 400;
+    font-size: 1.375rem;
+    margin: 0.5rem 0;
+}
+
+.rectangle-4 {
+    width: 100%;
+    height: 20rem;
+    padding: 1rem;
+    background: rgb(255, 255, 255);
+    border: 0.015625rem solid rgba(0, 0, 0, 0.6);
+    border-radius: 0.75rem;
+    overflow-y: auto;
+}
+
+/* Message Input */
+.message-input-container {
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+}
+
+.rectangle-5 {
+    flex: 1;
+    height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgb(255, 255, 255);
+    border: 0.015625rem solid rgba(0, 0, 0, 0.6);
+    border-radius: 0.75rem;
+    font-family: "Source Sans 3";
+    font-size: 0.95rem;
+    color: rgb(68, 68, 68);
+}
+
+.rectangle-5:focus {
+    outline: none;
+    border-color: rgb(139, 81, 245);
+}
+
+.send-button {
+    width: 2.5rem;
+    height: 2.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.2s ease;
+}
+
+.send-button:hover {
+    transform: scale(1.1);
+}
+
+.send-icon-1 {
+    width: 1.5rem;
+    height: 1.5rem;
+    fill: rgb(0, 0, 0);
+}
+
+/* TABLET - ab 768px */
+@media (min-width: 768px) {
+    .container {
+        max-width: 42rem;
+        padding: 2rem;
+    }
+
+    .lerngruppentool-1 {
+        font-size: 1.625rem;
+    }
+
+    .button-5 {
+        font-size: 1rem;
+        padding: 0rem 1rem;
+    }
+
+    .object-1 {
+        font-size: 1.125rem;
+    }
+
+    .teamname-1 {
+        font-size: 1.625rem;
+    }
+
+    .heading-1,
+    .heading-2 {
+        font-size: 0.875rem;
+    }
+
+    .tab-button {
+        padding: 0.5rem 1rem;
+    }
+
+    .chat {
+        font-size: 1.625rem;
+    }
+
+    .rectangle-4 {
+        height: 28rem;
+    }
+
+    .rectangle-5 {
+        font-size: 1rem;
+    }
+}
+
+/* LAPTOP/DESKTOP - ab 1024px */
+@media (min-width: 1024px) {
+    .container {
+        max-width: 50rem;
+        padding: 2.5rem;
+    }
+
+    .account-circle-icon-1 {
+        width: 2.25rem;
+        height: 2.25rem;
+    }
+
+    .lerngruppentool-1 {
+        font-size: 1.875rem;
+    }
+
+    .button-5 {
+        height: 2.25rem;
+        font-size: 1.05rem;
+    }
+
+    .rectangle-4 {
+        height: 34rem;
+    }
+
+    .rectangle-5 {
+        height: 3rem;
+        font-size: 1.05rem;
+    }
+
+    .send-button {
+        width: 3rem;
+        height: 3rem;
+    }
+
+    .send-icon-1 {
+        width: 1.75rem;
+        height: 1.75rem;
+    }
+}
+
+/* GROSSE DESKTOP - ab 1440px */
+@media (min-width: 1440px) {
+    .container {
+        max-width: 56rem;
+        padding: 3rem;
+    }
+
+    .rectangle-4 {
+        height: 38rem;
+    }
+}
