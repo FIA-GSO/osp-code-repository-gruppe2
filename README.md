@@ -114,5 +114,26 @@ Die neu erstellten Migrationen sollen ins Git Hub committed werden.
 
 ---
 
+## Datenbank einstellen 
+
+Hier soll nun beschrieben werden wie man die Datenbank bei sich nutzt. 
+
+### .env setzen 
+
+Man erstellt in der obersten Struktur eine .env Datei. In dieser fügt man die Zeile 
+
+`SECRET_KEY=3f4a1e9d7b2c8e4a6d9f1a3c7e8b5a2d4f6e9c1a7b8d3e5f2c4a6b98ER`
+
+Diese passt man am Ende an in dem man einige Zeichen ersetzt. Sie muss immer die gleiche Länge. 
+
+## Seed Datei verwenden um die app.db auszufüllen 
+
+Innerhalb des Projektes gibt es eine seed.py Datei, welche dazu da ist die Datenbank mit Dummydaten zu füllen. Sie liegt innerhalb des app Ordners um diese auszuführen und die app.db auszufüllen nutzt man im Terminal den Befehl 
+
+`python -m app.seed`
+
+Am Ende der Ausführung sollte ein "seeding abgeschlossen" im Terminal ausgegeben werden. 
+
+
 
 
