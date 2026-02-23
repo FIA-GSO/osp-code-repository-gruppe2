@@ -6,4 +6,4 @@ groups_bp = Blueprint("groups", __name__, url_prefix="/groups")
 @groups_bp.route("/")
 @login_required
 def group_list():
-    return render_template("overview/html/groups.html", user=current_user)
+    return render_template("group/html/groups_list.html", user=current_user)

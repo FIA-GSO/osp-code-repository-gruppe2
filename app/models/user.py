@@ -31,5 +31,11 @@ class User(UserMixin, db.Model):
     )
     last_login_at = db.Column(db.DateTime)
 
+    
+# NEW: Klassenbezug
+    school_class_id = db.Column(db.Integer, db.ForeignKey("school_classes.id"), nullable=True)
+    school_class = db.relationship("SchoolClass", back_populates="users")
+
+
     def get_id(self) -> str:
         return uuid.UUID(bytes=self.user_id).hex

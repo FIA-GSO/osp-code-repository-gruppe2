@@ -1,11 +1,16 @@
-import uuid
-from datetime import datetime
+# app/models/school_class.py
+from datetime import datetime, UTC
 from app.extensions import db
 
 class SchoolClass(db.Model):
     __tablename__ = "school_classes"
 
-    class_id = db.Column(db.String(36), primary_key=True,default=lambda: str(uuid.uuid4()))
-    name = db.Column(db.Text, nullable=False)
-    created_at = db.Column(db.DateTime, default=datetime.utcnow)
-    is_active = db.Column(db.Boolean, default=True)
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String(50), nullable=False, unique=True)  # z.B. "FI-23A"
+    created_at = db.Column(db.DateTime(timezone=True), default=lambda: datetime.now(UTC), nullable=False)
+
+    # optional: Rückbeziehung zu User
+    users = db.relationship("User", back_populates="school_class", lazy=True)
+
+    def __repr__(self):
+        return f"<SchoolClass {self.name}>"
