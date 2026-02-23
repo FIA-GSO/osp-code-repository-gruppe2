@@ -3,6 +3,8 @@ from flask_login import login_user, logout_user, current_user
 from werkzeug.security import check_password_hash, generate_password_hash
 from urllib.parse import urlparse, urljoin
 
+from app.models.school_class import SchoolClass
+
 from app.extensions import db
 from app.models.user import User
 
@@ -52,14 +54,69 @@ def test():
     return render_template("test.html")
 
 
+
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register_form():
+    
+    print("REGISTER METHOD:", request.method)
+    print("REGISTER FORM:", request.form.to_dict())
+
     if request.method == "POST":
-        # Registrierung (hast du schon)
-        ...
+        # Form auslesen
+        school_class_id = request.form.get("school_class_id", "")
+        first_name = request.form.get("first_name", "").strip()
+        last_name  = request.form.get("last_name", "").strip()
+        email      = request.form.get("email", "").strip().lower()
+        password   = request.form.get("password", "")
+
+        # Validierung
+        if not first_name or not last_name or not email or not password:
+            flash("Bitte fülle alle Pflichtfelder aus.", "error")
+            return redirect(url_for("auth.register_form"))
+
+        # Optional: Domain-Check
+        # if not email.endswith("@gso.schule.koeln"):
+        #     flash("Bitte nutze deine GSO E-Mail-Adresse.", "error")
+        #     return redirect(url_for("auth.register_form"))
+
+        # Email unique
+        if User.query.filter_by(email=email).first():
+            flash("Diese E-Mail ist bereits registriert.", "error")
+            return redirect(url_for("auth.register_form"))
+
+        # school_class_id optional, aber wenn gesetzt -> prüfen
+        sc_id = None
+        if school_class_id:
+            try:
+                sc_id = int(school_class_id)
+            except ValueError:
+                sc_id = None
+
+            if sc_id and not SchoolClass.query.get(sc_id):
+                flash("Ungültige Klasse ausgewählt.", "error")
+                return redirect(url_for("auth.register_form"))
+
+        # User erstellen (WICHTIG: Passwort hashen)
+        user = User(
+            email=email,
+            password=generate_password_hash(password),
+            first_name=first_name,
+            last_name=last_name,
+            role="user",
+            is_active=True,
+            school_class_id=sc_id
+        )
+        print(user.first_name)
+        db.session.add(user)
+        db.session.commit()
+
+        flash("Registrierung erfolgreich! Bitte logge dich ein.", "success")
         return redirect(url_for("auth.login_form"))
 
-    return render_template("register/html/register.html")
+    # GET: Klassen für Dropdown laden
+    classes = SchoolClass.query.order_by(SchoolClass.name.asc()).all()
+    return render_template("register/html/register.html", classes=classes)
+
 
 
 
