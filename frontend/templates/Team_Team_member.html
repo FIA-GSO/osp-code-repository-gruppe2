@@ -2,89 +2,116 @@
 <html lang="de">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LerngruppenTool</title>
-  <link rel="stylesheet" href="/frontend/static/css/Team_Team_members.css">
-  <link
-    href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap"
-    rel="stylesheet">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LerngruppenTool</title>
+    <link rel="stylesheet" href="/frontend/static/css/Team_Team_members.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap"
+        rel="stylesheet">
 </head>
 
 <body>
+    <div class="app-container">
+        <header class="header">
+            <div class="top-bar">
+                <span class="account-circle-icon-1">👤</span>
+                <a href="/Login"><button class="logout-btn">Ausloggen</button></a>
+            </div>
+            <h1 class="lerngruppentool-1">LerngruppenTool</h1>
+            <div class="navigation">
+                <a href="#" class="back-link"><span class="arrow">‹</span> Zurück</a>
+                <h2 class="teamname-1">Teamname</h2>
+            </div>
+        </header>
 
-  <div class="app-container">
-    <header class="header">
-      <div class="top-bar">
-        <span class="account-circle-icon-1">👤</span>
-        <a href="/Login"><button class="logout-btn">Ausloggen</button></a>
-      </div>
-      <h1 class="lerngruppentool-1">LerngruppenTool</h1>
-      <div class="navigation">
-        <a href="#" class="back-link"><span class="arrow">‹</span> Zurück</a>
-        <h2 class="teamname-1">Teamname</h2>
-      </div>
-    </header>
+        <hr class="horizontal-line-1">
 
-    <hr class="horizontal-line-1">
+        <nav class="tabs">
+            <button class="rectangle-1 heading-1 active">Teammitglieder</button>
+            <button class="rectangle-2 heading-2" onclick="location.href='/Chat'">Chat</button>
+            <button class="rectangle-3 heading-3" onclick="location.href='/Einstellungen'">Einstellungen</button>
+        </nav>
 
-    <nav class="tabs">
-      <button class="rectangle-1 heading-1 active">Teammitglieder</button>
-      <button class="rectangle-2 heading-2" onclick="location.href='/Chat'">Chat</button>
-      <button class="rectangle-3 heading-3" onclick="location.href='/Einstellungen'">Einstellungen</button>
-      <button onclick="location.href='/register'"></button>
-    </nav>
+        <main class="content-box rectangle-white-shadow">
+            <h3 class="teammitglieder">Teammitglieder</h3>
+            <p class="anzahl-4">Anzahl: 0</p>
 
-    <main class="content-box rectangle-white-shadow">
-      <h3 class="teammitglieder">Teammitglieder</h3>
-      <p class="anzahl-4">Anzahl: 4</p>
+            <div class="search-container">
+                <input type="text" class="search-1" placeholder="🔍 Person hinzufügen..">
+            </div>
 
-      <div class="search-container">
-        <input type="text" class="search-1" placeholder="🔍 Person hinzufügen..">
-      </div>
+            <div class="member-list"></div>
+        </main>
 
-      <div class="member-list">
-        <div class="rectangle-4 member-card">
+        <section class="requests-section rectangle-white-shadow">
+            <h3 class="anfragen">Anfragen</h3>
+        </section>
+    </div>
+
+    <!-- ----------------- JS ----------------- -->
+    <script>
+        const groupId = "DEINE_GROUP_ID"; // Hier echte Gruppen-ID einsetzen
+        let currentUserRole = null;
+
+        async function loadData() {
+            const response = await fetch(`/api/groups/${groupId}`);
+            const data = await response.json();
+            currentUserRole = data.currentUserRole;
+            renderMembers(data.members);
+            renderRequests(data.requests);
+        }
+
+        function renderMembers(members) {
+            const list = document.querySelector(".member-list");
+            list.innerHTML = "";
+            members.forEach(member => {
+                let roleBadge = `<span class="tag-5">${member.role}</span>`;
+                let deleteIcon = "";
+                if ((currentUserRole === "OWNER" || currentUserRole === "ADMIN") && member.role !== "OWNER") {
+                    deleteIcon = `<span class="delete-forever-icon-1" onclick="deleteMember('${member.id}')">🗑️</span>`;
+                }
+                list.innerHTML += `
+        <div class="member-card">
           <span class="account-circle-icon-2">👤</span>
-          <a href="#" class="link-1">Ange Köchner (Ich)</a>
-          <span class="tag-5">Admin</span>
-          <span class="delete-forever-icon-1">🗑️</span>
-        </div>
+          <a href="#">${member.first_name} ${member.last_name}</a>
+          ${roleBadge}
+          ${deleteIcon}
+        </div>`;
+            });
+            document.querySelector(".anzahl-4").textContent = "Anzahl: " + members.length;
+        }
 
-        <div class="rectangle-5 member-card">
-          <span class="account-circle-icon-3">👤</span>
-          <a href="#" class="link-2">Oliver Enns</a>
-          <div class="tag-6 icon-btn"><span>⊕</span></div>
-          <span class="delete-forever-icon-2">🗑️</span>
-        </div>
+        async function deleteMember(userId) {
+            await fetch(`/api/groups/${groupId}/members/${userId}`, { method: "DELETE" });
+            loadData();
+        }
 
-        <div class="rectangle-6 member-card">
-          <span class="account-circle-icon-4">👤</span>
-          <a href="#" class="link-3">Sebastian Prang</a>
-          <div class="tag-7 icon-btn"><span>⊕</span></div>
-          <span class="delete-forever-icon-3">🗑️</span>
-        </div>
+        function renderRequests(requests) {
+            const section = document.querySelector(".requests-section");
+            section.innerHTML = `<h3 class="anfragen">Anfragen</h3>`;
+            requests.forEach(user => {
+                section.innerHTML += `
+        <div class="member-card">
+          <span class="account-circle-icon-6">👤</span>
+          <a href="#">${user.first_name} ${user.last_name}</a>
+          <span class="check-circle-icon-1" onclick="acceptRequest('${user.id}')">✔️</span>
+          <span class="delete-forever-icon-5">🗑️</span>
+        </div>`;
+            });
+        }
 
-        <div class="rectangle-7 member-card">
-          <span class="account-circle-icon-5">👤</span>
-          <a href="#" class="link-4">Michael Fischer</a>
-          <div class="tag-8 icon-btn"><span>⊕</span></div>
-          <span class="delete-forever-icon-4">🗑️</span>
-        </div>
-      </div>
-    </main>
+        async function acceptRequest(userId) {
+            await fetch(`/api/groups/${groupId}/invitations/${userId}/accept`, { method: "POST" });
+            loadData();
+        }
 
-    <section class="requests-section rectangle-white-shadow">
-      <h3 class="anfragen">Anfragen</h3>
-      <div class="rectangle-8 member-card">
-        <span class="account-circle-icon-6">👤</span>
-        <a href="#" class="link-5">Somebody</a>
-        <span class="check-circle-icon-1">✔️</span>
-        <span class="delete-forever-icon-5">🗑️</span>
-      </div>
-    </section>
-  </div>
+        loadData();
 
+        fetch(`/api/groups/${groupId}`)
+
+
+    </script>
 </body>
 
 </html>
