@@ -1,6 +1,6 @@
 from flask import Flask, redirect, url_for
 from app.extensions import db, migrate, login_manager
-from config import Config
+import config as cfg
 import os
 
 from flask import render_template
@@ -9,6 +9,8 @@ from flask import render_template
 def create_app():
     
     
+ 
+
     base_dir = os.path.abspath(os.path.dirname(__file__))
 
     app = Flask(
@@ -17,9 +19,15 @@ def create_app():
         static_folder=os.path.join(base_dir, "..", "frontend", "pages"),
         static_url_path="/static"
     )
-
+    print("SQLALCHEMY_DATABASE_URI =", app.config.get("SQLALCHEMY_DATABASE_URI"))
+    print("INSTANCE PATH =", app.instance_path)
 
     print("Template search path:", app.jinja_loader.searchpath)
+    from config import Config
+    
+    print("CONFIG FILE USED:", cfg.__file__)
+    print("CONFIG CLASS FROM:", Config.__module__)
+    print("Config.SQLALCHEMY_DATABASE_URI attr:", getattr(Config, "SQLALCHEMY_DATABASE_URI", "MISSING"))
 
     app.config.from_object(Config)
 
@@ -42,6 +50,7 @@ def create_app():
     from app.models.user_consent import UserConsent
     from app.models.audit_log import AuditLog
     from app.models.report import Report
+    from app.models.school_class import SchoolClass
 
     # Blueprints registrieren
     from app.routes.groups import groups_bp
