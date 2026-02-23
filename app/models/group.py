@@ -10,13 +10,11 @@ class Group(db.Model):
     name = db.Column(db.Text, nullable=False)
     description = db.Column(db.Text)
 
-    min_members = db.Column(db.Integer)
     max_members = db.Column(db.Integer)
     join_policy = db.Column(db.String(50))
 
     leader_id = db.Column(db.String(36), db.ForeignKey("users.user_id"), nullable=False)
 
-    is_cross_class = db.Column(db.Boolean, default=True)
 
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
     updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)

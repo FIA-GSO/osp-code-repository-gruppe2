@@ -1,4 +1,5 @@
 /* --- Fonts Import (Google Fonts für Source Sans 3 & Roboto) --- */
+/* --- Overview.css - für erkunden und my-teams --- */
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Source+Sans+3:wght@400;500;600;700&display=swap');
 
 /* --- Reset & Base Layout --- */
@@ -9,7 +10,7 @@
 }
 
 body {
-    background-color: #f5f5f5; /* Leichter Hintergrund wie im Bild */
+    background-color: #f5f5f5;
     display: flex;
     justify-content: center;
     padding-top: 2rem;
@@ -17,15 +18,26 @@ body {
     font-family: "Source Sans 3", sans-serif;
 }
 
-/* Hauptcontainer (Handy-Screen Simulation) */
+/* Hauptcontainer */
 .app-container {
     background: #fff;
-    width: 25rem; /* Etwas breiter als die Karten für Padding */
+    width: 25rem;
     max-width: 600px;
     min-height: 100vh;
     padding: 1.5rem;
     position: relative;
     box-shadow: 0 0 20px rgba(0,0,0,0.1);
+}
+
+/* --- Links ohne Unterstrich --- */
+a {
+    text-decoration: none;
+}
+
+/* Icon Links */
+.icon-link {
+    display: inline-flex;
+    cursor: pointer;
 }
 
 /* --- Header Section --- */
@@ -41,23 +53,33 @@ body {
     height: 1.875rem;
     fill: rgb(0, 0, 0);
     cursor: pointer;
+    transition: all 0.3s ease;
 }
 
-.button-5 { /* Logout Button */
+/* Profil-Icon Hover: nur lila Umrandung */
+.icon-link:hover .account-circle-icon-1 {
+    filter: drop-shadow(0 0 3px rgb(139, 81, 245));
+}
+
+.button-5 {
     width: 5.6875rem;
     height: 2rem;
     background: rgb(214, 214, 214);
-    border: 0.0625rem solid rgb(255, 255, 255);
+    border: 0.0625rem solid transparent;
     border-radius: 0.4375rem;
     color: rgb(68, 68, 68);
     font-family: "Source Sans 3";
     font-weight: 500;
     font-size: 1rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     cursor: pointer;
-    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Ausloggen Button Hover: lila Border + leicht grauer */
+.button-5:hover {
+    background: rgb(194, 194, 194);
+    border-color: rgb(139, 81, 245);
+    border-width: 0.125rem;
 }
 
 .lerngruppentool {
@@ -84,14 +106,20 @@ body {
     background: rgb(255, 255, 255);
     border: 0.078125rem solid rgb(96, 96, 96);
     border-radius: 0.4375rem;
-    color: rgb(192, 192, 192); /* Placeholder Farbe */
+    color: rgb(68, 68, 68);
     font-family: "Source Sans 3";
     font-weight: 400;
     font-size: 0.875rem;
-    padding-left: 2.5rem; /* Platz für Icon */
+    padding-left: 2.5rem;
     background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="gray" viewBox="0 0 16 16"><path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z"/></svg>');
     background-repeat: no-repeat;
     background-position: 10px center;
+    transition: border-color 0.3s ease;
+}
+
+.search-1:focus {
+    outline: none;
+    border-color: rgb(139, 81, 245);
 }
 
 .filter-list-icon-1 {
@@ -99,6 +127,11 @@ body {
     height: 2.5rem;
     fill: rgb(0, 0, 0);
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-list-icon-1:hover {
+    fill: rgb(139, 81, 245);
 }
 
 /* --- Navigation / Tabs --- */
@@ -114,6 +147,12 @@ body {
     height: 1.875rem;
     fill: rgb(0, 0, 0);
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Plus-Icon Hover: nur lila Umrandung */
+.icon-link:hover .add-circle-outline-icon-1 {
+    fill: rgb(139, 81, 245);
 }
 
 /* Button Stile */
@@ -122,17 +161,41 @@ body {
     gap: 1rem;
 }
 
-/* Rectangle 1 aus Input (Tab Aktiv) */
+/* Tab Aktiv */
 .tab-active {
     width: 6.875rem;
     height: 2.5rem;
     background: rgb(224, 224, 224);
-    border: 0.125rem solid rgb(139, 81, 245); /* Lila Border */
+    border: 0.125rem solid rgb(139, 81, 245);
     border-radius: 0.75rem;
     display: flex;
     justify-content: center;
     align-items: center;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-active:hover {
+    background: rgb(204, 204, 204);
+}
+
+/* Tab Inaktiv */
+.tab-inactive {
+    width: 6.84375rem;
+    height: 2.5rem;
+    background: rgb(224, 224, 224);
+    border: 0.125rem solid transparent;
+    border-radius: 0.75rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.tab-inactive:hover {
+    background: rgb(204, 204, 204);
+    border-color: rgb(139, 81, 245);
 }
 
 .heading-1 {
@@ -143,19 +206,6 @@ body {
     text-align: center;
 }
 
-/* Rectangle 2 aus Input (Tab Inaktiv) */
-.tab-inactive {
-    width: 6.84375rem;
-    height: 2.5rem;
-    background: rgb(224, 224, 224);
-    border-radius: 0.75rem;
-    border: none;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-}
-
 /* --- Cards Section --- */
 .cards-container {
     display: flex;
@@ -164,7 +214,6 @@ body {
     align-items: center;
 }
 
-/* Rectangle 1 (Card Definition) / Rectangle 4 / Rectangle 3 */
 .card {
     width: 21.8125rem;
     height: 15.625rem;
@@ -193,7 +242,10 @@ body {
     justify-content: center;
     align-items: center;
 }
-.image-placeholder-1 svg {
+
+.image-placeholder-1 svg,
+.image-placeholder-2 svg,
+.image-placeholder-3 svg {
     fill: #9e9e9e;
     width: 50%;
     height: 50%;
@@ -219,16 +271,6 @@ body {
     font-size: 1.125rem;
     text-decoration: underline;
     cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 0.3rem;
-}
-
-/* Kleiner Blitz im Link */
-.bolt-icon {
-    width: 0.8rem;
-    height: 0.8rem;
-    fill: #4CAF50;
 }
 
 /* Placeholder Text (Balken) */
@@ -236,14 +278,13 @@ body {
     width: 100%;
     height: 3.8125rem;
     margin-bottom: 1.5rem;
-    /* Fallback für fehlenden "BLOKK" Font: CSS Gradient Balken */
     background-image: linear-gradient(#e0e0e0 10px, transparent 10px);
     background-size: 100% 18px;
     background-repeat: repeat-y;
     opacity: 0.6;
 }
 
-/* Action Area (Button + Flag) */
+/* Action Area */
 .card-actions {
     margin-top: auto;
     display: flex;
@@ -251,11 +292,11 @@ body {
     align-items: center;
 }
 
-.button-1, .button-4, .button-3 { /* Der blaue Öffnen Button */
+/* Alle Button-Typen mit Hover */
+.button-1, .button-3, .button-4 {
     width: 14.125rem;
     height: 2.5rem;
-    background: rgb(152, 210, 255);
-    border: 0.0625rem solid rgb(255, 255, 255);
+    border: 0.125rem solid transparent;
     border-radius: 0.4375rem;
     color: rgb(68, 68, 68);
     font-family: "Source Sans 3";
@@ -265,6 +306,25 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
+    transition: all 0.3s ease;
+}
+
+.button-1, .button-3 {
+    background: rgb(152, 210, 255);
+}
+
+.button-1:hover, .button-3:hover {
+    background: rgb(132, 190, 235);
+    border-color: rgb(139, 81, 245);
+}
+
+.button-4 {
+    background: rgb(214, 214, 214);
+}
+
+.button-4:hover {
+    background: rgb(194, 194, 194);
+    border-color: rgb(139, 81, 245);
 }
 
 .flag-icon-1, .flag-icon-2, .flag-icon-3 {
@@ -272,4 +332,9 @@ body {
     height: 1.875rem;
     fill: rgb(255, 56, 35);
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.flag-icon-1:hover, .flag-icon-2:hover, .flag-icon-3:hover {
+    fill: rgb(235, 36, 15);
 }

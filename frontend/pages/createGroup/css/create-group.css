@@ -1,4 +1,5 @@
 /* --- Global Reset & Layout Helpers (für Darstellung nötig) --- */
+/* --- createTeam --- */
 * {
     box-sizing: border-box;
 }
@@ -14,12 +15,22 @@ body {
 .app-container {
     background-color: #ffffff;
     width: 100%;
-    max-width: 600px; /* Für Desktop Version (damit nicht die ganze Bildschirm breite genutzt wird) */
+    max-width: 600px;
     min-height: 100vh;
     padding: 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
+}
+
+/* --- Links --- */
+a {
+    text-decoration: none;
+}
+
+.icon-link {
+    display: inline-flex;
+    cursor: pointer;
 }
 
 header {
@@ -67,16 +78,13 @@ main {
     width: 100%;
     display: flex;
     flex-direction: column;
-    align-items: flex-start; /* Labels linksbündig */
+    align-items: center;
     gap: 8px;
     margin-bottom: 10px;
-    /* Zentrierung der Inputs sicherstellen, da sie fixe Breiten haben */
-    align-items: center;
 }
 
-/* Speziell für Labels, damit sie linksbündig über dem zentrierten Input stehen */
 .form-group label {
-    width: 17.5rem; /* Breite des Inputs matchen für linksbündigen Text */
+    width: 17.5rem;
     text-align: left;
 }
 
@@ -84,6 +92,22 @@ main {
     width: 17.5rem;
     display: flex;
     justify-content: space-between;
+    gap: 1rem;
+}
+
+.stepper-group {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.stepper-label {
+    color: rgb(68, 68, 68);
+    font-family: "Source Sans 3", sans-serif;
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-align: left;
 }
 
 .radio-container {
@@ -98,6 +122,37 @@ main {
     align-items: center;
     gap: 10px;
     cursor: pointer;
+}
+
+.radio-label input[type="radio"] {
+    cursor: pointer;
+    width: 1.2rem;
+    height: 1.2rem;
+    accent-color: rgb(139, 81, 245);
+}
+
+/* Checkbox Styling */
+.checkbox-label-main {
+    width: 17.5rem;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    margin-top: 0.5rem;
+}
+
+.checkbox-1 {
+    width: 1.25rem;
+    height: 1.25rem;
+    cursor: pointer;
+    accent-color: rgb(139, 81, 245);
+}
+
+.checkbox-text {
+    color: rgb(68, 68, 68);
+    font-family: "Source Sans 3", sans-serif;
+    font-weight: 500;
+    font-size: 1rem;
 }
 
 .action-buttons {
@@ -115,7 +170,14 @@ main {
     width: 1.875rem;
     height: 1.875rem;
     fill: rgb(0, 0, 0);
+    cursor: pointer;
+    transition: all 0.3s ease;
 }
+
+.icon-link:hover .account-circle-icon-1 {
+    filter: drop-shadow(0 0 3px rgb(139, 81, 245));
+}
+
 .lerngruppentool-1 {
     width: 17.5rem;
     height: 2.3125rem;
@@ -124,17 +186,17 @@ main {
     font-weight: 700;
     font-size: 1.625rem;
     text-align: center;
-    /* Vertikale Zentrierung im CSS ergänzt, falls nötig */
     display: flex;
     align-items: center;
     justify-content: center;
 }
+
 .button-5 {
     width: 5.6875rem;
     height: 2rem;
     padding: 0rem 0.625rem;
     background: rgb(214, 214, 214);
-    border: 0.0625rem solid rgb(255, 255, 255);
+    border: 0.0625rem solid transparent;
     border-radius: 0.4375rem;
     color: rgb(68, 68, 68);
     font-family: "Source Sans 3", sans-serif;
@@ -142,29 +204,32 @@ main {
     font-size: 1rem;
     text-align: center;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
-.teamname {
-    width: 7.625rem;
+
+.button-5:hover {
+    background: rgb(194, 194, 194);
+    border-color: rgb(139, 81, 245);
+    border-width: 0.125rem;
+}
+
+.gruppenname-header {
+    width: auto;
     height: 2.3125rem;
     color: rgb(0, 0, 0);
     font-family: "Source Sans 3", sans-serif;
     font-weight: 400;
     font-size: 1.625rem;
-    /*text-align: left;
-    display: flex;
-    align-items: center;*/
-    
     text-align: center;
     display: flex;
     align-items: center;
     justify-content: center;
+    white-space: nowrap;
 }
+
 .object-1 {
     position: absolute;
     left: 0;
-    /*top: 50%;*/
-    /*transform: translateY(-50%);*/
-    
     width: 5.5rem;
     height: 1.4375rem;
     color: rgb(3, 122, 255);
@@ -175,7 +240,13 @@ main {
     display: flex;
     align-items: center;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
+
+.object-1:hover {
+    color: rgb(0, 92, 205);
+}
+
 .plain-svg-1 {
     width: 0.774875rem;
     height: 1.3125rem;
@@ -185,8 +256,9 @@ main {
     stroke: transparent;
     margin-right: 5px;
 }
+
 .team-erstellen {
-    width: 9.9375rem;
+    width: auto;  /* Geändert von 9.9375rem */
     height: 2.3125rem;
     color: rgb(0, 0, 0);
     font-family: "Source Sans 3", sans-serif;
@@ -194,16 +266,17 @@ main {
     font-size: 1.625rem;
     text-align: center;
     margin: 0;
+    white-space: nowrap;  /* Verhindert Zeilenumbruch */
 }
+
 .teamnamen-festlegen {
-    width: 9.375rem;
-    height: 1.4375rem;
     color: rgb(68, 68, 68);
     font-family: "Source Sans 3", sans-serif;
     font-weight: 500;
     font-size: 1rem;
     text-align: left;
 }
+
 .text-input-1 {
     width: 17.5rem;
     height: 2.8125rem;
@@ -216,24 +289,57 @@ main {
     font-weight: 500;
     font-size: 1rem;
     text-align: left;
+    transition: border-color 0.3s ease;
 }
+
+.text-input-1:focus {
+    outline: none;
+    border-color: rgb(139, 81, 245);
+}
+
 .text-input-1::placeholder {
     color: rgba(68, 68, 68, 0.5);
 }
 
+/* Textarea für Beschreibung */
+.textarea-1 {
+    width: 17.5rem;
+    min-height: 5rem;
+    padding: 0.5rem;
+    background: rgb(255, 255, 255);
+    border: 0.078125rem solid rgb(96, 96, 96);
+    border-radius: 0.25rem;
+    color: rgb(68, 68, 68);
+    font-family: "Source Sans 3", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+    text-align: left;
+    resize: vertical;
+    line-height: 1.5;
+    transition: border-color 0.3s ease;
+}
+
+.textarea-1:focus {
+    outline: none;
+    border-color: rgb(139, 81, 245);
+}
+
+.textarea-1::placeholder {
+    color: rgba(68, 68, 68, 0.5);
+}
+
 .max-teammitglieder {
-    width: 8.875rem;
-    height: 1.4375rem;
     color: rgb(68, 68, 68);
     font-family: "Source Sans 3", sans-serif;
     font-weight: 500;
     font-size: 1rem;
     text-align: left;
 }
+
 .stepper-input-2 {
-    width: 8.125rem;
+    width: 100%;
     height: 2rem;
-    padding: 0rem 0.3125rem;
+    padding: 0rem 0.5rem;
     background: rgb(235, 235, 235);
     border: 0.0625rem solid rgb(35, 35, 35);
     border-radius: 0.1875rem;
@@ -241,20 +347,24 @@ main {
     font-family: "Source Sans 3", sans-serif;
     font-weight: 400;
     font-size: 0.875rem;
-    text-align: left;
+    text-align: center;
+    transition: border-color 0.3s ease;
 }
+
+.stepper-input-2:focus {
+    outline: none;
+    border-color: rgb(139, 81, 245);
+}
+
 .beitrittsart-ausw-hlen {
-    width: 9.4375rem;
-    height: 1.4375rem;
     color: rgb(68, 68, 68);
     font-family: "Source Sans 3", sans-serif;
     font-weight: 500;
     font-size: 1rem;
     text-align: left;
 }
+
 .radio-1 {
-    width: 6.4375rem;
-    height: 1.25rem;
     color: rgb(35, 35, 35);
     font-family: "Source Sans 3", sans-serif;
     font-weight: 400;
@@ -263,9 +373,8 @@ main {
     display: flex;
     align-items: center;
 }
+
 .radio-2 {
-    width: 8.125rem;
-    height: 1.1875rem;
     color: rgb(35, 35, 35);
     font-family: "Source Sans 3", sans-serif;
     font-weight: 400;
@@ -274,15 +383,15 @@ main {
     display: flex;
     align-items: center;
 }
+
 .lernziel-tags-optional- {
-    width: 10.0625rem;
-    height: 1.4375rem;
     color: rgb(68, 68, 68);
     font-family: "Source Sans 3", sans-serif;
     font-weight: 500;
     font-size: 1rem;
     text-align: left;
 }
+
 .text-input-2 {
     width: 17.5rem;
     height: 2.8125rem;
@@ -295,16 +404,24 @@ main {
     font-weight: 500;
     font-size: 1rem;
     text-align: left;
+    transition: border-color 0.3s ease;
 }
+
+.text-input-2:focus {
+    outline: none;
+    border-color: rgb(139, 81, 245);
+}
+
 .text-input-2::placeholder {
     color: rgba(68, 68, 68, 0.5);
 }
+
 .button-2 {
     width: 14.125rem;
     height: 2.8125rem;
     padding: 0rem 0.625rem;
     background: rgb(152, 210, 255);
-    border: 0.0625rem solid rgb(255, 255, 255);
+    border: 0.125rem solid transparent;
     border-radius: 0.4375rem;
     color: rgb(0, 0, 0);
     font-family: "Source Sans 3", sans-serif;
@@ -312,13 +429,20 @@ main {
     font-size: 1rem;
     text-align: center;
     cursor: pointer;
+    transition: all 0.3s ease;
 }
+
+.button-2:hover {
+    background: rgb(132, 190, 235);
+    border-color: rgb(139, 81, 245);
+}
+
 .button-3 {
     width: 14.125rem;
     height: 2.8125rem;
     padding: 0rem 0.625rem;
     background: rgb(214, 214, 214);
-    border: 0.0625rem solid rgb(255, 255, 255);
+    border: 0.125rem solid transparent;
     border-radius: 0.4375rem;
     color: rgb(0, 0, 0);
     font-family: "Source Sans 3", sans-serif;
@@ -326,4 +450,10 @@ main {
     font-size: 1rem;
     text-align: center;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.button-3:hover {
+    background: rgb(194, 194, 194);
+    border-color: rgb(139, 81, 245);
 }
