@@ -90,6 +90,7 @@ link{
     display: flex;
     gap: 10px;
     margin-bottom: 10px;
+    position: relative;
 }
 
 .rectangle-1-tab {
@@ -220,8 +221,28 @@ link{
     cursor: pointer;
 }
 .flag-icon-1 {
-	width: 1..875rem;
+	width: 1.875rem;
 	height: 1.875rem;
 	fill: rgb(255, 56, 35);
 }
 
+.add-icon {
+    position: absolute;
+    left: -50px;
+    top: 0;
+
+    width: 2.5rem;
+    height: 2.5rem;
+    border: 0.125rem solid black;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.add-icon:hover {
+    background-color: #f0f0f0;
+}
