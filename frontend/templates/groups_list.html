@@ -34,6 +34,7 @@
   <tr>
     <th>ID</th>
     <th>Name</th>
+    <th>Leader</th>
     <th>Max. Mitglieder</th>
     <th>Join-Policy</th>
     <th>Erstellt am</th>
@@ -45,6 +46,7 @@
   <tr>
     <td>{{ g.group_id }}</td>
     <td>{{ g.name }}</td>
+    <td>{{ g.leader_id }}</td>
     <td>{{ g.max_members or '-' }}</td>
     <td>{{ g.join_policy or '-' }}</td>
     <td>{{ g.created_at or '-' }}</td>

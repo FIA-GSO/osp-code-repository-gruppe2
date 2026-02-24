@@ -39,6 +39,22 @@
   </div>
 
   <div class="row">
+    <label for="leader_id">Leiter:in *</label>
+    <select id="leader_id" name="leader_id" required>
+      <option value="">-- auswählen --</option>
+      {% for u in users %}
+      {# Wenn user_id bytes ist: hex anzeigen; sonst String #}
+      {% if u.user_id.__class__.__name__ in ('bytes', 'bytearray') %}
+      {% set uid = u.user_id.hex() %}
+      {% else %}
+      {% set uid = u.user_id %}
+      {% endif %}
+      <option value="{{ uid }}">{{ u.first_name }} {{ u.last_name }} ({{ u.email }})</option>
+      {% endfor %}
+    </select>
+  </div>
+
+  <div class="row">
     <label for="max_members">Max. Mitglieder *</label>
     <input type="number" id="max_members" name="max_members" min="1" step="1" required
            value="{{ (form.max_members if form else '') or '' }}" />

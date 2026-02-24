@@ -5,6 +5,7 @@ from sqlalchemy.exc import SQLAlchemyError
 
 from app.extensions import db
 from app.models.group import Group
+from app.models.user import User
 
 groups_bp = Blueprint("groups", __name__, url_prefix="/groups")
 
@@ -13,6 +14,17 @@ def _now():
 
 def _uuid_str():
     return str(uuid.uuid4())
+
+def _parse_leader_id(leader_id_str: str):
+    if not leader_id_str:
+        return None
+    s = leader_id_str.strip()
+    if len(s) == 32:  # hex → bytes (falls user_id als BLOB gespeichert)
+        try:
+            return bytes.fromhex(s)
+        except ValueError:
+            return s
+    return s  # 36-Zeichen-UUID (String) oder anderes
 
 # READ (Liste)
 @groups_bp.route("/", methods=["GET"], strict_slashes=False)
@@ -23,7 +35,8 @@ def list_groups():
 # CREATE (Form)
 @groups_bp.route("/new", methods=["GET"], strict_slashes=False)
 def new_group_form():
-    return render_template("groups_create.html")
+    users = User.query.filter_by(is_active=True).order_by(User.first_name, User.last_name).all()
+    return render_template("groups_create.html", users=users)
 
 # CREATE (Submit)
 @groups_bp.route("/new", methods=["POST"])
@@ -32,15 +45,18 @@ def create_group():
     description = request.form.get("description") or ""
     max_members = request.form.get("max_members") or None
     join_policy = request.form.get("join_policy") or "open"
+    leader_id_str = request.form.get("leader_id") or ""
 
     errors = []
     if not name:
         errors.append("Gruppenname ist erforderlich.")
+    if not leader_id_str:
+        errors.append("Leiter:in ist erforderlich.")
 
     try:
         max_members = int(max_members) if max_members not in (None, "") else None
-        if max_members is not None and max_members < 1:
-            errors.append("Max. Mitglieder muss mindestens 1 sein.")
+        if max_members is not None and max_members < 2:
+            errors.append("Max. Mitglieder muss mindestens 2 sein.")
     except ValueError:
         errors.append("Max. Mitglieder muss eine Zahl sein.")
 
@@ -50,7 +66,10 @@ def create_group():
     if errors:
         for e in errors:
             flash(e, "error")
-        return render_template("groups_create.html", form=request.form), 400
+        users = User.query.filter_by(is_active=True).order_by(User.first_name, User.last_name).all()
+        return render_template("groups_create.html", users=users, form=request.form), 400
+
+    leader_id = _parse_leader_id(leader_id_str)
 
     group = Group(
         group_id=_uuid_str(),
@@ -58,7 +77,7 @@ def create_group():
         description=description,
         max_members=max_members,
         join_policy=join_policy,
-        leader_id=None,
+        leader_id=leader_id,
         created_at=_now(),
         updated_at=_now(),
     )
@@ -71,7 +90,8 @@ def create_group():
     except SQLAlchemyError as exc:
         db.session.rollback()
         flash(f"Fehler beim Speichern: {exc}", "error")
-        return render_template("groups_create.html", form=request.form), 500
+        users = User.query.filter_by(is_active=True).order_by(User.first_name, User.last_name).all()
+        return render_template("groups_create.html", users=users, form=request.form), 500
 
 
 @groups_bp.route("/<group_id>", methods=["GET"])
@@ -83,7 +103,10 @@ def show_group(group_id):
 @groups_bp.route("/<group_id>/edit", methods=["GET"])
 def edit_group_form(group_id):
     group = Group.query.get_or_404(group_id)
-    return render_template("groups_edit.html", group=group)
+    users = User.query.filter_by(is_active=True).order_by(
+        User.first_name, User.last_name
+    ).all()
+    return render_template("groups_edit.html", group=group, users=users)
 
 
 @groups_bp.route("/<group_id>/edit", methods=["POST"])
