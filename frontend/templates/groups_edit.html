@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8">
+  <title>Gruppe bearbeiten</title>
+</head>
+<body>
+
+<h1>Gruppe bearbeiten</h1>
+
+<form method="post">
+
+  <label>Name</label><br>
+  <input type="text" name="name" value="{{ group.name }}" required><br><br>
+
+  <label>Beschreibung</label><br>
+  <textarea name="description">{{ group.description or '' }}</textarea><br><br>
+
+  <label>Min Mitglieder</label><br>
+  <input type="number" name="min_members" value="{{ group.min_members or '' }}"><br><br>
+
+  <label>Max Mitglieder</label><br>
+  <input type="number" name="max_members" value="{{ group.max_members or '' }}"><br><br>
+
+  <label>Join Policy</label><br>
+  <select name="join_policy">
+    <option value="open" {{ 'selected' if group.join_policy == 'open' }}>open</option>
+    <option value="invite" {{ 'selected' if group.join_policy == 'invite' }}>invite</option>
+    <option value="closed" {{ 'selected' if group.join_policy == 'closed' }}>closed</option>
+  </select><br><br>
+
+  <label>
+    <input type="checkbox" name="is_cross_class" {{ 'checked' if group.is_cross_class }}>
+    Klassenübergreifend
+  </label><br><br>
+
+  <button type="submit">Speichern</button>
+</form>
+
+<p>
+  <a href="{{ url_for('groups.show_group', group_id=group.group_id) }}">Abbrechen</a>
+</p>
+
+</body>
+</html>
