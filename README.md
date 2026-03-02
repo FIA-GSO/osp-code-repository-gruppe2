@@ -134,6 +134,13 @@ Innerhalb des Projektes gibt es eine seed.py Datei, welche dazu da ist die Daten
 
 Am Ende der Ausführung sollte ein "seeding abgeschlossen" im Terminal ausgegeben werden. 
 
+## In der Powershell Datenbankeinträge ausgeben 
+
+Um Tabelleneinträge auszugeben startet man die Anwendung und öffnet zusätzich eine Powershell. Darin gibt man den Befehl 
+
+`sqlite3 ".\instance\app.db" "SELECT <Tabellenspalten>  FROM <Tabellenname>;"`
+
+
 
 
 
