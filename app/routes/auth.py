@@ -1,123 +1,167 @@
-from flask import Blueprint, render_template, request, redirect, url_for, flash
-from flask_login import login_user, logout_user, current_user
+import re
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
+from flask_login import login_user, logout_user
 from werkzeug.security import check_password_hash, generate_password_hash
-from urllib.parse import urlparse, urljoin
-
-from app.models.school_class import SchoolClass
 
 from app.extensions import db
 from app.models.user import User
+from app.models.school_class import SchoolClass
 
 auth_bp = Blueprint("auth", __name__)
 
-def _is_safe_url(target):
-    ref_url = urlparse(request.host_url)
-    test_url = urlparse(urljoin(request.host_url, target))
-    return test_url.scheme in ("http", "https") and ref_url.netloc == test_url.netloc
+
+def is_fetch_request() -> bool:
+    """Erkennt AJAX/fetch Requests aus unserem Frontend."""
+    return request.headers.get("X-Requested-With") == "fetch"
+
+
+def valid_name(name: str) -> bool:
+    """
+    Nur Buchstaben + Leerzeichen/Bindestrich.
+    Nutzt Unicode isalpha() => Umlaute/ß funktionieren.
+    """
+    if not name:
+        return False
+    allowed_extra = {" ", "-"}
+    for ch in name:
+        if ch.isalpha():
+            continue
+        if ch in allowed_extra:
+            continue
+        return False
+    # nicht nur aus Leerzeichen/Bindestrich bestehen
+    return any(c.isalpha() for c in name)
+
+
+def validate_password(pw: str) -> list[str]:
+    """Liste von Passwort-Fehlermeldungen (leer = ok)."""
+    errors = []
+    if len(pw) < 8:
+        errors.append("Mindestens 8 Zeichen.")
+    if not re.search(r"[a-z]", pw):
+        errors.append("Mindestens ein Kleinbuchstabe.")
+    if not re.search(r"[A-Z]", pw):
+        errors.append("Mindestens ein Großbuchstabe.")
+    if not re.search(r"\d", pw):
+        errors.append("Mindestens eine Zahl.")
+    if not re.search(r"[^A-Za-z0-9]", pw):
+        errors.append("Mindestens ein Sonderzeichen.")
+    return errors
 
 
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login_form():
-    
-    print("METHOD:", request.method)
-    print("FORM:", dict(request.form))
-    
-    
-
-
     if request.method == "POST":
-        email = request.form.get("email", "").strip().lower()
-        password = request.form.get("password", "")
+        email = (request.form.get("email") or "").strip().lower()
+        password = request.form.get("password") or ""
         remember = bool(request.form.get("remember"))
 
         user = User.query.filter_by(email=email).first()
-        print("user:", user)
-        if user:
-            print("stored pw:", user.password)
         if user and check_password_hash(user.password, password):
             login_user(user, remember=remember)
-            
-            print("LOGIN OK -> current_user.is_authenticated =", current_user.is_authenticated)
-            print("LOGIN OK -> current_user.get_id() =", current_user.get_id())
-
             return redirect(url_for("groups.group_list"))
-        else:
-            print("LOGIN FAIL -> user found? ", bool(user))
-            if user: 
-                print("Stored passwort start:", str(user.password)[:30])
+
         flash("Login fehlgeschlagen.", "error")
 
     return render_template("login/html/login.html")
 
-@auth_bp.route("/test")
-def test():
-    return render_template("test.html")
-
-
 
 @auth_bp.route("/register", methods=["GET", "POST"])
 def register_form():
-    
-    print("REGISTER METHOD:", request.method)
-    print("REGISTER FORM:", request.form.to_dict())
-
-    if request.method == "POST":
-        # Form auslesen
-        school_class_id = request.form.get("school_class_id", "")
-        first_name = request.form.get("first_name", "").strip()
-        last_name  = request.form.get("last_name", "").strip()
-        email      = request.form.get("email", "").strip().lower()
-        password   = request.form.get("password", "")
-
-        # Validierung
-        if not first_name or not last_name or not email or not password:
-            flash("Bitte fülle alle Pflichtfelder aus.", "error")
-            return redirect(url_for("auth.register_form"))
-
-        # Optional: Domain-Check
-        # if not email.endswith("@gso.schule.koeln"):
-        #     flash("Bitte nutze deine GSO E-Mail-Adresse.", "error")
-        #     return redirect(url_for("auth.register_form"))
-
-        # Email unique
-        if User.query.filter_by(email=email).first():
-            flash("Diese E-Mail ist bereits registriert.", "error")
-            return redirect(url_for("auth.register_form"))
-
-        # school_class_id optional, aber wenn gesetzt -> prüfen
-        sc_id = None
-        if school_class_id:
-            try:
-                sc_id = int(school_class_id)
-            except ValueError:
-                sc_id = None
-
-            if sc_id and not SchoolClass.query.get(sc_id):
-                flash("Ungültige Klasse ausgewählt.", "error")
-                return redirect(url_for("auth.register_form"))
-
-        # User erstellen (WICHTIG: Passwort hashen)
-        user = User(
-            email=email,
-            password=generate_password_hash(password),
-            first_name=first_name,
-            last_name=last_name,
-            role="user",
-            is_active=True,
-            school_class_id=sc_id
-        )
-        print(user.first_name)
-        db.session.add(user)
-        db.session.commit()
-
-        flash("Registrierung erfolgreich! Bitte logge dich ein.", "success")
-        return redirect(url_for("auth.login_form"))
-
-    # GET: Klassen für Dropdown laden
     classes = SchoolClass.query.order_by(SchoolClass.name.asc()).all()
-    return render_template("register/html/register.html", classes=classes)
 
+    if request.method == "GET":
+        return render_template("register/html/register.html", classes=classes)
 
+    # POST
+    school_class_id = (request.form.get("school_class_id") or "").strip()
+    first_name = (request.form.get("first_name") or "").strip()
+    last_name  = (request.form.get("last_name") or "").strip()
+    email      = (request.form.get("email") or "").strip().lower()
+    password   = request.form.get("password") or ""
+
+    errors = {}
+
+    # Klasse required + existiert
+    sc_id = None
+    if not school_class_id:
+        errors["school_class_id"] = "Bitte wähle eine Klasse aus."
+    else:
+        try:
+            sc_id = int(school_class_id)
+            if not SchoolClass.query.get(sc_id):
+                errors["school_class_id"] = "Ungültige Klasse ausgewählt."
+        except ValueError:
+            errors["school_class_id"] = "Ungültige Klasse ausgewählt."
+
+    # Vorname / Nachname required + nur Buchstaben
+    if not first_name:
+        errors["first_name"] = "Vorname ist erforderlich."
+    elif not valid_name(first_name):
+        errors["first_name"] = "Nur Buchstaben (ggf. Leerzeichen/Bindestrich) erlaubt."
+
+    if not last_name:
+        errors["last_name"] = "Nachname ist erforderlich."
+    elif not valid_name(last_name):
+        errors["last_name"] = "Nur Buchstaben (ggf. Leerzeichen/Bindestrich) erlaubt."
+
+    # Email: required + Domain + Unique
+    if not email:
+        errors["email"] = "E-Mail ist erforderlich."
+    else:
+        # einfache Plausi (optional)
+        if "@" not in email or email.startswith("@") or email.endswith("@"):
+            errors["email"] = "Bitte eine gültige E-Mail-Adresse eingeben."
+        elif not email.endswith("@gso.schule.koeln"):
+            errors["email"] = "Bitte nutze deine GSO E-Mail-Adresse (@gso.schule.koeln)."
+        elif User.query.filter_by(email=email).first():
+            errors["email"] = "Diese E-Mail ist bereits registriert."
+
+    # Passwort Standards
+    if not password:
+        errors["password"] = "Passwort ist erforderlich."
+    else:
+        pw_errors = validate_password(password)
+        if pw_errors:
+            errors["password"] = pw_errors
+
+    # Fehler -> JSON für fetch / HTML fallback
+    if errors:
+        if is_fetch_request():
+            return jsonify({"ok": False, "errors": errors}), 422
+
+        # Fallback wenn JS aus: Seite rendern (kein redirect)
+        return render_template(
+            "register/html/register.html",
+            classes=classes,
+            errors=errors,
+            form={
+                "school_class_id": school_class_id,
+                "first_name": first_name,
+                "last_name": last_name,
+                "email": email
+            }
+        ), 422
+
+    # User erstellen
+    user = User(
+        email=email,
+        password=generate_password_hash(password),
+        first_name=first_name,
+        last_name=last_name,
+        role="user",
+        is_active=True,
+        school_class_id=sc_id
+    )
+    db.session.add(user)
+    db.session.commit()
+
+    # Erfolg: JSON redirect oder normaler redirect
+    if is_fetch_request():
+        return jsonify({"ok": True, "redirect": url_for("auth.login_form")}), 200
+
+    flash("Registrierung erfolgreich! Bitte logge dich ein.", "success")
+    return redirect(url_for("auth.login_form"))
 
 
 @auth_bp.route("/logout")
