@@ -37,11 +37,7 @@ async function gruppeErstellen() {
         });
 
         if (response.ok || response.redirected) {
-            if (history.length > 1) {
-                history.back();
-            } else {
-                window.location.href = '../../overview/html/my-teams.html';
-            }
+            window.location.href = '../../overview/html/my-teams.html'; // ← direkt navigieren
         } else {
             alert(`Fehler beim Erstellen der Gruppe (Status: ${response.status})`);
         }

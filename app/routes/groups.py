@@ -1,6 +1,6 @@
 import uuid
 from datetime import datetime
-from flask import Blueprint, render_template, request, redirect, url_for, flash
+from flask import Blueprint, render_template, request, redirect, url_for, flash, jsonify
 from sqlalchemy.exc import SQLAlchemyError
 
 from app.extensions import db
@@ -142,3 +142,14 @@ def delete_group(group_id):
         db.session.rollback()
         flash(f"Löschen fehlgeschlagen: {e}", "error")
         return redirect(url_for("groups.show_group", group_id=group.group_id))
+
+@groups_bp.route("/api", methods=["GET"])
+def get_groups_json():
+    groups = Group.query.order_by(Group.created_at.desc()).all()
+    return jsonify([{
+        "group_id":    g.group_id,
+        "name":        g.name,
+        "description": g.description or "",
+        "max_members": g.max_members,
+        "join_policy": g.join_policy,
+    } for g in groups])
