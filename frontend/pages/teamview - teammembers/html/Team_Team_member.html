@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LerngruppenTool</title>
+    <link rel="stylesheet" href="/frontend/pages/teamview - teammembers/css/Team_Team_members.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&family=Source+Sans+3:wght@400;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+
+<body>
+    <div class="app-container">
+        <header class="header">
+            <div class="top-bar">
+                <span class="account-circle-icon-1">👤</span>
+                <a href="/Login"><button class="logout-btn">Ausloggen</button></a>
+            </div>
+            <h1 class="lerngruppentool-1">LerngruppenTool</h1>
+            <div class="navigation">
+                <a href="#" class="back-link"><span class="arrow">‹</span> Zurück</a>
+                <h2 class="teamname-1">Teamname</h2>
+            </div>
+        </header>
+
+        <hr class="horizontal-line-1">
+
+        <nav class="tabs">
+            <button class="rectangle-1 heading-1 active">Teammitglieder</button>
+            <button class="rectangle-2 heading-2" onclick="location.href='/Chat'">Chat</button>
+            <button class="rectangle-3 heading-3" onclick="location.href='/Einstellungen'">Einstellungen</button>
+        </nav>
+
+        <main class="content-box rectangle-white-shadow">
+            <h3 class="teammitglieder">Teammitglieder</h3>
+            <p class="anzahl-4">Anzahl: 0</p>
+
+            <div class="search-container">
+                <input type="text" class="search-1" placeholder="🔍 Person hinzufügen..">
+            </div>
+
+            <div class="member-list" , id="renderMembers"></div>
+        </main>
+
+        <section class="requests-section rectangle-white-shadow">
+            <h3 class="anfragen">Anfragen</h3>
+        </section>
+    </div>
+</body>
+
+</html>
