@@ -110,7 +110,7 @@
         const container = document.getElementById('cardsContainer');
 
         try {
-            const response = await fetch('http://127.0.0.1:5000/groups/api');
+            const response = await fetch('http://127.0.0.1:5000/groups/api/mine');
 
             if (!response.ok) {
                 throw new Error(`Status: ${response.status}`);
