@@ -89,7 +89,7 @@ def login_form():
         user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password, password):
             login_user(user, remember=remember)
-            return redirect(url_for("groups.group_list"))
+            return redirect(url_for("groups.explore"))
 
         # ❗ Nur EIN Fehlertext, immer gleich
         return render_template(
