@@ -16,12 +16,12 @@
     <div class="app-container">
         <header class="header">
             <div class="top-bar">
-                <span class="account-circle-icon-1">👤</span>
-                <a href="/Login"><button class="logout-btn">Ausloggen</button></a>
+                <a href="{{ url_for('profile.user_profile') }}"><span class="account-circle-icon-1">👤</span></a>
+                 <a href="{{ url_for('auth.logout') }}" class="icon-link"><button class="logout-btn">Ausloggen</button></a>
             </div>
             <h1 class="lerngruppentool-1">LerngruppenTool</h1>
             <div class="navigation">
-                <a href="#" class="back-link"><span class="arrow">‹</span> Zurück</a>
+                <a href="/overview" class="back-link"><span class="arrow">‹</span> Zurück</a>
                 <h2 class="teamname-1">Teamname</h2>
             </div>
         </header>
