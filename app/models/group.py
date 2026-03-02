@@ -24,3 +24,14 @@ class Group(db.Model):
     # In deinem Sheet stand 'deleted_at_' – ich habe das als 'deleted_at' vereinheitlicht.
     # Wenn ihr explizit 'deleted_at_' wollt, benenne die Spalte unten entsprechend um.
     deleted_at = db.Column(db.DateTime)
+
+    # am Ende der Group-Klasse einfach hinzufügen
+def to_dict(self):
+    return {
+        "id":          self.group_id,
+        "name":        self.name,
+        "description": self.description,
+        "max_members": self.max_members,
+        "join_policy": self.join_policy,
+        "leader_id":   self.leader_id,
+    }
