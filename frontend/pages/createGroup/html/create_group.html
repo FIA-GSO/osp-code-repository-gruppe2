@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LerngruppenTool – Neue Gruppe erstellen</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='createGroup/css/create_group.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <div class="app-container">
+
+        <header>
+            <div class="header-top">
+                <span class="icon-link" title="Profil (noch nicht verfügbar)">
+                    <svg class="account-circle-icon-1" viewBox="0 0 24 24">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                    </svg>
+                </span>
+                <a href="{{ url_for('auth.logout') }}" class="icon-link" title="Ausloggen">
+                    <button class="button-5" type="button">Ausloggen</button>
+                </a>
+            </div>
+
+            <div class="lerngruppentool-1">LerngruppenTool</div>
+
+            <div class="header-nav">
+                <a href="{{ url_for('groups.explore') }}" class="object-1" onclick="handleZurueck(event)">
+                    <svg class="plain-svg-1" viewBox="0 0 24 24">
+                        <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
+                    </svg>
+                    Zurück
+                </a>
+                <div class="gruppenname-header">Neue Gruppe</div>
+            </div>
+        </header>
+
+        <hr class="divider">
+
+        <main>
+            <h1 class="team-erstellen">Gruppe erstellen</h1>
+
+            <form method="POST" action="{{ url_for('groups.new_group') }}">
+                <div class="form-group">
+                    <label class="teamnamen-festlegen">Gruppenname *</label>
+                    <input type="text" name="name" id="gruppenname" class="text-input-1" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="teamnamen-festlegen">Beschreibung</label>
+                    <textarea name="description" id="beschreibung" class="textarea-1" rows="4"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="max-teammitglieder">Max. Gruppenmitglieder *</label>
+                    <input type="number" name="max_members" id="maxMitglieder" class="stepper-input-2" value="10"
+                        min="1" required>
+                </div>
+
+                <div class="form-group">
+                    <label class="beitrittsart-ausw-hlen">Beitrittsart auswählen</label>
+                    <label><input type="radio" name="join_policy" value="open" checked> Frei beitreten</label>
+                    <label><input type="radio" name="join_policy" value="invite"> Nur per Einladung</label>
+                    <label><input type="radio" name="join_policy" value="closed"> Geschlossen</label>
+                </div>
+
+                <div class="action-buttons">
+                    <button class="button-2" type="submit">Gruppe erstellen</button>
+                    <a class="button-3" href="{{ url_for('groups.explore') }}">Abbrechen</a>
+                </div>
+            </form>
+
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='createGroup/js/create-group.js') }}"></script>
+
+</body>
+
+</html>

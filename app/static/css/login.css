@@ -1,0 +1,356 @@
+/* Reset & Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: "Source Sans 3", sans-serif;
+    background: rgb(245, 245, 245);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.page {
+    width: 100%;
+    padding: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* MOBILE FIRST - Base Styles für Handy */
+.rectangle-1 {
+    width: 100%;
+    max-width: 20rem;
+    padding: 2rem 1.5rem;
+    box-shadow: 0rem 0.25rem 1.25rem rgba(0, 0, 0, 0.07);
+    background: rgb(255, 255, 255);
+    border: 0.015625rem solid rgba(0, 0, 0, 0.3);
+    border-radius: 0.75rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.login {
+    width: 100%;
+    color: rgb(68, 68, 68);
+    font-family: "Source Sans 3";
+    font-weight: 500;
+    font-size: 1.5rem;
+    text-align: center;
+    margin-bottom: 0.5rem;
+}
+
+.melde-dich-mit-deiner-gso-email-auf-lerngruppentoo {
+    width: 100%;
+    color: rgb(146, 146, 146);
+    font-family: "Source Sans 3";
+    font-weight: 400;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    text-align: center;
+    margin-bottom: 1.5rem;
+}
+
+.account-circle-icon-1 {
+    width: 4rem;
+    height: 4rem;
+    fill: rgb(170, 170, 170);
+    margin-bottom: 1.5rem;
+    flex-shrink: 0;
+}
+
+.form-group {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+}
+
+.mail-adresse,
+.passwort {
+    width: 100%;
+    color: rgb(68, 68, 68);
+    font-family: "Source Sans 3";
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-align: left;
+}
+
+.text-input-1,
+.text-input-2 {
+    width: 100%;
+    height: 2.5rem;
+    padding: 0.5rem 0.75rem;
+    background: rgb(255, 255, 255);
+    border: 0.078125rem solid rgb(96, 96, 96);
+    border-radius: 0.25rem;
+    color: rgb(68, 68, 68);
+    font-family: "Source Sans 3";
+    font-weight: 400;
+    font-size: 0.95rem;
+}
+
+.text-input-1::placeholder,
+.text-input-2::placeholder {
+    color: rgba(146, 146, 146, 0.7);
+}
+
+.text-input-1:focus,
+.text-input-2:focus {
+    outline: none;
+    border-color: rgb(152, 210, 255);
+}
+
+.button-1 {
+    width: 100%;
+    max-width: 12rem;
+    height: 2.5rem;
+    background: rgb(152, 210, 255);
+    border: none;
+    border-radius: 0.4375rem;
+    color: rgb(68, 68, 68);
+    font-family: "Source Sans 3";
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 1rem;
+    margin-bottom: 0.75rem;
+}
+
+.button-1:hover {
+    background: rgb(132, 190, 235);
+}
+
+.button-2 {
+    width: 100%;
+    max-width: 12rem;
+    height: 2.5rem;
+    background: rgb(214, 214, 214);
+    border: none;
+    border-radius: 0.4375rem;
+    color: rgb(68, 68, 68);
+    font-family: "Source Sans 3";
+    font-weight: 500;
+    font-size: 0.95rem;
+    text-align: center;
+    cursor: pointer;
+    transition: background 0.3s ease;
+    margin-top: 0.75rem;
+}
+
+.button-2:hover {
+    background: rgb(194, 194, 194);
+}
+
+.divider {
+    width: 100%;
+    max-width: 16rem;
+    position: relative;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin: 0;
+}
+
+.horizontal-line-2 {
+    flex: 1;
+    height: 0.0625rem;
+    border: none;
+    background: rgb(235, 235, 235);
+}
+
+.rectangle-2 {
+    flex-shrink: 0;
+    padding: 0 0.5rem;
+    background: rgb(255, 255, 255);
+    color: rgb(146, 146, 146);
+    font-family: "Source Sans 3";
+    font-weight: 400;
+    font-size: 0.8rem;
+    line-height: 1.3;
+    white-space: nowrap;
+}
+
+/* TABLET - ab 768px Breite */
+@media (min-width: 768px) {
+    .rectangle-1 {
+        max-width: 26rem;
+        padding: 2.5rem 2rem;
+    }
+
+    .login {
+        font-size: 1.75rem;
+    }
+
+    .melde-dich-mit-deiner-gso-email-auf-lerngruppentoo {
+        font-size: 0.875rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .account-circle-icon-1 {
+        width: 4.75rem;
+        height: 4.75rem;
+        margin-bottom: 1.75rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.15rem;
+    }
+
+    .mail-adresse,
+    .passwort {
+        font-size: 1rem;
+    }
+
+    .text-input-1,
+    .text-input-2 {
+        height: 2.65rem;
+        font-size: 1rem;
+    }
+
+    .button-1,
+    .button-2 {
+        max-width: 13rem;
+        height: 2.65rem;
+        font-size: 1rem;
+    }
+
+    .button-1 {
+        margin-top: 1.25rem;
+        margin-bottom: 0.85rem;
+    }
+
+    .button-2 {
+        margin-top: 0.85rem;
+    }
+
+    .divider {
+        max-width: 17.5rem;
+    }
+
+    .rectangle-2 {
+        font-size: 0.875rem;
+    }
+}
+
+/* LAPTOP/DESKTOP - ab 1024px Breite */
+@media (min-width: 1024px) {
+    .rectangle-1 {
+        max-width: 30rem;
+        padding: 3rem 2.5rem;
+    }
+
+    .login {
+        font-size: 2rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .melde-dich-mit-deiner-gso-email-auf-lerngruppentoo {
+        font-size: 0.95rem;
+        margin-bottom: 2rem;
+    }
+
+    .account-circle-icon-1 {
+        width: 5.5rem;
+        height: 5.5rem;
+        margin-bottom: 2rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.4rem;
+    }
+
+    .mail-adresse,
+    .passwort {
+        font-size: 1.1rem;
+    }
+
+    .text-input-1,
+    .text-input-2 {
+        height: 3rem;
+        padding: 0.625rem 0.875rem;
+        font-size: 1.05rem;
+    }
+
+    .button-1,
+    .button-2 {
+        max-width: 15rem;
+        height: 3rem;
+        font-size: 1.1rem;
+    }
+
+    .button-1 {
+        margin-top: 1.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .button-2 {
+        margin-top: 1rem;
+    }
+
+    .divider {
+        max-width: 19rem;
+    }
+
+    .rectangle-2 {
+        font-size: 0.9rem;
+    }
+}
+
+/* GROSSE DESKTOP SCREENS - ab 1440px */
+@media (min-width: 1440px) {
+    .rectangle-1 {
+        max-width: 32rem;
+        padding: 3.5rem 3rem;
+    }
+
+    .login {
+        font-size: 2.25rem;
+    }
+
+    .melde-dich-mit-deiner-gso-email-auf-lerngruppentoo {
+        font-size: 1rem;
+        margin-bottom: 2.25rem;
+    }
+
+    .account-circle-icon-1 {
+        width: 6rem;
+        height: 6rem;
+        margin-bottom: 2.25rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+
+    .mail-adresse,
+    .passwort {
+        font-size: 1.15rem;
+    }
+
+    .text-input-1,
+    .text-input-2 {
+        height: 3.25rem;
+        font-size: 1.1rem;
+    }
+
+    .button-1,
+    .button-2 {
+        max-width: 16rem;
+        height: 3.25rem;
+        font-size: 1.15rem;
+    }
+
+    .divider {
+        max-width: 20rem;
+    }
+}
