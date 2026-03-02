@@ -11,7 +11,7 @@ from app.models.user import User
 groups_bp = Blueprint("groups", __name__, url_prefix="/groups")
 
 def _now():
-    return datetime.utcnow()
+    return datetime.now()
 
 def _uuid_str():
     return str(uuid.uuid4())
@@ -131,7 +131,7 @@ def update_group(group_id):
     group.max_members = request.form.get("max_members") or None
     group.join_policy = request.form.get("join_policy")
     group.is_cross_class = request.form.get("is_cross_class") == "on"
-    group.updated_at = datetime.utcnow()
+    group.updated_at = datetime.now()
 
     try:
         db.session.commit()
