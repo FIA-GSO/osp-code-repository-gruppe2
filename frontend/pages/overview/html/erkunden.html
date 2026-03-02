@@ -1,73 +1,77 @@
 <!DOCTYPE html>
 <html lang="de">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>LerngruppenTool – Erkunden</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='overview/css/overview.css') }}">
 </head>
+
 <body>
 
-<div class="app-container">
+    <div class="app-container">
 
-    <header>
-        <div class="header-top">
-            <span class="icon-link" title="Profil (noch nicht verfügbar)">
-                <svg class="account-circle-icon-1" viewBox="0 0 24 24">
-                    <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+        <header>
+            <div class="header-top">
+                <a href="{{ url_for('profile.user_profile') }}" class="icon-link" title="Profil">
+                    <svg class="account-circle-icon-1" viewBox="0 0 24 24" aria-hidden="true">
+                        <path
+                            d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z" />
+                    </svg>
+                </a>
+                <a href="{{ url_for('auth.logout') }}" class="icon-link" title="Ausloggen">
+                    <button class="button-5" type="button">Ausloggen</button>
+                </a>
+            </div>
+
+            <div class="lerngruppentool">LerngruppenTool</div>
+
+            <div class="search-container">
+                <input type="text" class="search-1" placeholder="Suche">
+                <svg class="filter-list-icon-1" viewBox="0 0 24 24">
+                    <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z" />
                 </svg>
-            </span>
-            <a href="{{ url_for('auth.logout') }}" class="icon-link" title="Ausloggen">
-                        <button class="button-5" type="button">Ausloggen</button>
-                    </a>
-        </div>
+            </div>
+        </header>
 
-        <div class="lerngruppentool">LerngruppenTool</div>
-
-        <div class="search-container">
-            <input type="text" class="search-1" placeholder="Suche">
-            <svg class="filter-list-icon-1" viewBox="0 0 24 24">
-                <path d="M10 18h4v-2h-4v2zM3 6v2h18V6H3zm3 7h12v-2H6v2z"/>
-            </svg>
-        </div>
-    </header>
-
-    <nav class="nav-controls">
-        <a href="../../createGroup/html/create-group.html" class="icon-link" title="Neue Gruppe erstellen">
-            <svg class="add-circle-outline-icon-1" viewBox="0 0 24 24">
-                <path d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z"/>
-            </svg>
-        </a>
-
-        <div class="btn-group">
-            <a href="my-teams.html">
-                <button class="tab-inactive">
-                    <span class="heading-1">Meine Teams</span>
-                </button>
+        <nav class="nav-controls">
+            <a href="../../createGroup/html/create-group.html" class="icon-link" title="Neue Gruppe erstellen">
+                <svg class="add-circle-outline-icon-1" viewBox="0 0 24 24">
+                    <path
+                        d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
+                </svg>
             </a>
-            <button class="tab-active">
-                <span class="heading-1">Erkunden</span>
-            </button>
-        </div>
-    </nav>
 
-    <main class="cards-container" id="cardsContainer">
-        <!-- Gruppen werden dynamisch geladen -->
-    </main>
-</div>
+            <div class="btn-group">
+                <a href="my-teams.html">
+                    <button class="tab-inactive">
+                        <span class="heading-1">Meine Teams</span>
+                    </button>
+                </a>
+                <button class="tab-active">
+                    <span class="heading-1">Erkunden</span>
+                </button>
+            </div>
+        </nav>
 
-<script>
-    const JOIN_POLICY_LABELS = {
-        open:   "Frei beitreten",
-        invite: "Nur per Einladung",
-        closed: "Geschlossen",
-    };
+        <main class="cards-container" id="cardsContainer">
+            <!-- Gruppen werden dynamisch geladen -->
+        </main>
+    </div>
 
-    function erstelleKarte(gruppe) {
-        const beitretenLabel = gruppe.join_policy === "open" ? "Beitreten" : "Beitritt anfragen";
-        const btnClass       = gruppe.join_policy === "open" ? "button-1" : "button-4";
+    <script>
+        const JOIN_POLICY_LABELS = {
+            open: "Frei beitreten",
+            invite: "Nur per Einladung",
+            closed: "Geschlossen",
+        };
 
-        return `
+        function erstelleKarte(gruppe) {
+            const beitretenLabel = gruppe.join_policy === "open" ? "Beitreten" : "Beitritt anfragen";
+            const btnClass = gruppe.join_policy === "open" ? "button-1" : "button-4";
+
+            return `
         <article class="card">
             <div class="card-header">
                 <div class="image-placeholder-1">
@@ -91,10 +95,10 @@
                 </svg>
             </div>
         </article>`;
-    }
+        }
 
-    function zeigeLeerzustand() {
-        return `
+        function zeigeLeerzustand() {
+            return `
         <div style="text-align: center; padding: 3rem 1rem; color: #888;">
             <svg viewBox="0 0 24 24" style="width: 3rem; height: 3rem; fill: #ccc; margin-bottom: 1rem;">
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
@@ -102,34 +106,35 @@
             <p style="font-family: 'Source Sans 3'; font-size: 1rem;">Keine Gruppen gefunden.</p>
             <p style="font-family: 'Source Sans 3'; font-size: 0.875rem;">Erstelle eine neue Gruppe oder schau später nochmal vorbei.</p>
         </div>`;
-    }
-
-    async function ladeGruppen() {
-        const container = document.getElementById('cardsContainer');
-
-        try {
-            const response = await fetch('http://127.0.0.1:5000/groups/api/explore');
-
-            if (!response.ok) {
-                throw new Error(`Status: ${response.status}`);
-            }
-
-            const gruppen = await response.json();
-
-            if (gruppen.length === 0) {
-                container.innerHTML = zeigeLeerzustand();
-            } else {
-                container.innerHTML = gruppen.map(g => erstelleKarte(g)).join('');
-            }
-
-        } catch (err) {
-            console.error('Fehler beim Laden der Gruppen:', err);
-            container.innerHTML = zeigeLeerzustand();
         }
-    }
 
-    ladeGruppen();
-</script>
+        async function ladeGruppen() {
+            const container = document.getElementById('cardsContainer');
+
+            try {
+                const response = await fetch('http://127.0.0.1:5000/groups/api/explore');
+
+                if (!response.ok) {
+                    throw new Error(`Status: ${response.status}`);
+                }
+
+                const gruppen = await response.json();
+
+                if (gruppen.length === 0) {
+                    container.innerHTML = zeigeLeerzustand();
+                } else {
+                    container.innerHTML = gruppen.map(g => erstelleKarte(g)).join('');
+                }
+
+            } catch (err) {
+                console.error('Fehler beim Laden der Gruppen:', err);
+                container.innerHTML = zeigeLeerzustand();
+            }
+        }
+
+        ladeGruppen();
+    </script>
 
 </body>
+
 </html>

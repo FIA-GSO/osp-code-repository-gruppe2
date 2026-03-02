@@ -7,9 +7,6 @@ from flask import render_template
 
 
 def create_app():
-    
-    
- 
 
     base_dir = os.path.abspath(os.path.dirname(__file__))
 
@@ -62,6 +59,9 @@ def create_app():
 
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp)
+
+    from.routes.profile import profile_bp
+    app.register_blueprint(profile_bp)
 
     # Root -> Login
     @app.route("/")
