@@ -1,3 +1,4 @@
+# config.py
 import os
 from dotenv import load_dotenv
 
@@ -10,8 +11,10 @@ class Config:
     SECRET_KEY = os.environ.get("SECRET_KEY")
 
     SQLALCHEMY_DATABASE_URI = os.environ.get(
+    SECRET_KEY = os.getenv("SECRET_KEY", "dev-secret")
+    SQLALCHEMY_DATABASE_URI = os.getenv(
         "DATABASE_URL",
-        f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}"
+        "sqlite:///" + os.path.join(BASE_DIR, "instance", "app.db")
     )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False

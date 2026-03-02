@@ -7,6 +7,9 @@ from app.extensions import db
 from app.models.group import Group
 from app.models.user import User
 
+from flask import Blueprint, render_template
+from flask_login import login_required, current_user
+
 groups_bp = Blueprint("groups", __name__, url_prefix="/groups")
 
 def _now():
@@ -153,3 +156,8 @@ def get_groups_json():
         "max_members": g.max_members,
         "join_policy": g.join_policy,
     } for g in groups])
+
+@groups_bp.route("/")
+@login_required
+def group_list():
+    return render_template("group/html/groups_list.html", user=current_user)

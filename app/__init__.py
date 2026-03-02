@@ -3,6 +3,13 @@ from flask import Flask
 from flask_cors import CORS
 from app.extensions import db, migrate
 from config import Config
+from flask import Flask, redirect, url_for
+from app.extensions import db, migrate, login_manager
+import config as cfg
+import os
+
+from flask import render_template
+
 
 def create_app():
     base_dir = os.path.abspath(os.path.dirname(__file__))
@@ -11,14 +18,40 @@ def create_app():
     )
 
     app = Flask(__name__, template_folder=template_dir)
+
+
+
+
+    base_dir = os.path.abspath(os.path.dirname(__file__))
+
+    app = Flask(
+        __name__,
+        template_folder=os.path.join(base_dir, "..", "frontend", "pages"),
+        static_folder=os.path.join(base_dir, "..", "frontend", "pages"),
+        static_url_path="/static"
+    )
+    print("SQLALCHEMY_DATABASE_URI =", app.config.get("SQLALCHEMY_DATABASE_URI"))
+    print("INSTANCE PATH =", app.instance_path)
+
+    print("Template search path:", app.jinja_loader.searchpath)
+    from config import Config
+
+    print("CONFIG FILE USED:", cfg.__file__)
+    print("CONFIG CLASS FROM:", Config.__module__)
+    print("Config.SQLALCHEMY_DATABASE_URI attr:", getattr(Config, "SQLALCHEMY_DATABASE_URI", "MISSING"))
+
     app.config.from_object(Config)
     CORS(app)
 
     # DB
     db.init_app(app)
+
     migrate.init_app(app, db)
+    login_manager.init_app(app)
+    login_manager.login_view = "auth.login_form"
 
     # Modelle (für Alembic / Mapper)
+    # Modelle importieren (damit Alembic & ORM sie kennen)
     from app.models.user import User
     from app.models.group import Group
     from app.models.tag import Tag
@@ -31,6 +64,11 @@ def create_app():
     from app.models.user_consent import UserConsent
     from app.models.audit_log import AuditLog
     from app.models.report import Report
+    from app.models.school_class import SchoolClass
+
+    # Blueprints registrieren
+    from app.routes.groups import groups_bp
+    app.register_blueprint(groups_bp)
 
     # Blueprint
     from app.routes.groups import groups_bp
@@ -39,5 +77,22 @@ def create_app():
     # ✅ RICHTIGES DEBUGGING
     print("🔎 Flask template_folder:", app.template_folder)
     print("🔎 Template folder exists:", os.path.exists(app.template_folder))
+    from app.routes.auth import auth_bp
+    app.register_blueprint(auth_bp)
+
+    # Root -> Login
+    @app.route("/")
+    def index():
+        return redirect(url_for("auth.login_form"))
+
+
+    @app.errorhandler(401)
+    def unauthorized(e):
+        return redirect(url_for("auth.login_form"))
+
+    @app.errorhandler(404)
+    def not_found(e):
+        return render_template("404.html"), 404
+
 
     return app
