@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+  <meta charset="utf-8">
+  <title>Gruppen</title>
+  <style>
+    body {
+      font-family: system-ui, sans-serif;
+      margin: 2rem;
+    }
+
+    table {
+      border-collapse: collapse;
+      width: 100%;
+    }
+
+    th,
+    td {
+      border: 1px solid #ddd;
+      padding: .5rem;
+    }
+
+    th {
+      background: #f5f5f5;
+      text-align: left;
+    }
+
+    .actions form {
+      display: inline;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .flash {
+      padding: .5rem .75rem;
+      margin: .5rem 0;
+      border-radius: 4px;
+    }
+
+    .flash.success {
+      background: #e7f6ec;
+      color: #236b3b;
+    }
+
+    .flash.error {
+      background: #fde8e8;
+      color: #9b1c1c;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 1rem;
+    }
+
+    .topbar-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-logout {
+      padding: .35rem .7rem;
+      border: 1px solid #ddd;
+      border-radius: 6px;
+      text-decoration: none;
+      color: #111;
+      background: #fff;
+      font-size: .9rem;
+    }
+
+    .btn-logout:hover {
+      background: #f5f5f5;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="topbar">
+    <h1>Gruppen</h1>
+
+    <div class="topbar-actions">
+      <a href="{{ url_for('groups.group_list') }}">+ Neue Gruppe</a>
+      <a href="{{ url_for('auth.logout') }}" class="btn-logout">Logout</a>
+    </div>
+  </div>
+
+  {% with messages = get_flashed_messages(with_categories=True) %}
+  {% if messages %}
+  {% for category, msg in messages %}
+  <div class="flash {{ category }}">{{ msg }}</div>
+  {% endfor %}
+  {% endif %}
+  {% endwith %}
+
+  <table>
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Leader</th>
+        <th>Mitglieder (Min/Max)</th>
+        <th>Join-Policy</th>
+        <th>Cross-Class</th>
+        <th>Erstellt am</th>
+        <th>Aktionen</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for g in groups %}
+      <tr>
+        <td>{{g.group_id}}</td>
+        <td>{{ g.name }}</td>
+        <td>
+          <!-- Wenn Relationship Group.leader existiert, könnte man g.leader.email anzeigen -->
+          {{ g.leader_id }}
+        </td>
+        <td>{{ g.min_members or '-' }}/{{ g.max_members or '-' }}</td>
+        <td>{{ g.join_policy or '-' }}</td>
+        <td>{{ 'Ja' if g.is_cross_class else 'Nein' }}</td>
+        <td>{{ g.created_at or '-' }}</td>
+        <td class="actions">
+
+          <a href="{{ url_for('groups.show_group', group_id=g.group_id) }}">Details</a> |
+          <a href="{{ url_for('groups.edit_group_form', group_id=g.group_id) }}">Bearbeiten</a> |
+
+          <form method="post" action="{{ url_for('groups.delete_group', group_id=g.group_id) }}" style="display:inline"
+            onsubmit="return confirm('Gruppe löschen?');">
+            <button type="submit">Löschen</button>
+          </form>
+
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td colspan="7">Keine Gruppen vorhanden.</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</body>
+
+</html>

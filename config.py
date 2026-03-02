@@ -1,3 +1,4 @@
+# config.py
 import os
 from dotenv import load_dotenv
 
@@ -11,7 +12,7 @@ class Config:
 
     SQLALCHEMY_DATABASE_URI = os.environ.get(
         "DATABASE_URL",
-        f"sqlite:///{os.path.join(BASE_DIR, 'app.db')}"
+        "sqlite:///" + os.path.join(BASE_DIR, "instance", "app.db")
     )
 
     SQLALCHEMY_TRACK_MODIFICATIONS = False

@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="de">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Registrierung</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Source+Sans+3:wght@400;500&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="{{ url_for('static', filename='register/css/register.css') }}">
+</head>
+
+<body>
+    <div class="rectangle-1">
+        <div class="header-nav">
+            <svg class="plain-svg-1" viewBox="0 0 12 20" xmlns="http://www.w3.org/2000/svg">
+                <path d="M11 1L2 10L11 19" stroke="rgb(3, 122, 255)" stroke-width="2" fill="none" stroke-linecap="round"
+                    stroke-linejoin="round" />
+            </svg>
+            <a href="{{ url_for('auth.login_form') }}">
+                <span class="object">Zurück</span>
+            </a>
+        </div>
+
+        <div class="content-column">
+            <div class="registrieren">Registrieren</div>
+
+
+            <div class="registriere-dich-mit-deiner-gso-email-auf-lerngrup">
+                Registriere dich mit deiner GSO-Email auf LerngruppenTool!
+            </div>
+
+            <div style="margin: 1.5rem 0;">
+                <svg class="account-circle-icon-1" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path
+                        d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2ZM12 5C13.66 5 15 6.34 15 8C15 9.66 13.66 11 12 11C10.34 11 9 9.66 9 8C9 6.34 10.34 5 12 5ZM12 19.2C9.5 19.2 7.29 17.92 6 15.98C6.03 13.99 10 12.9 12 12.9C13.99 12.9 17.97 13.99 18 15.98C16.71 17.92 14.5 19.2 12 19.2Z" />
+                </svg>
+            </div>
+
+            <!-- ✅ novalidate verhindert Browser Tooltips ("Füllen Sie dieses Feld aus.") -->
+            <form id="register-form" method="POST" action="{{ url_for('auth.register_form') }}" novalidate onkeydown="return event.key !== 'Enter';">
+                <div class="input-group">
+                    <select class="select-1" name="school_class_id" style="width: 100%;">
+                        <option value="" disabled {% if not (form and form.school_class_id) %}selected{% endif %}>Klasse
+                            auswählen..</option>
+                        {% for c in classes %}
+                        <option value="{{ c.id }}" {% if form and form.school_class_id and
+                            (form.school_class_id|int==c.id) %}selected{% endif %}>
+                            {{ c.name }}
+                        </option>
+                        {% endfor %}
+                    </select>
+                    <div class="field-error" data-error-for="school_class_id">
+                        {% if errors and errors.school_class_id %}{{ errors.school_class_id }}{% endif %}
+                    </div>
+                </div>
+
+                <div class="row-inputs">
+                    <div>
+                        <div class="vorname">Vorname</div>
+                        <input type="text" class="text-input-4" name="first_name" placeholder="Max"
+                            autocomplete="given-name" value="{{ (form.first_name if form else '')|e }}">
+                        <div class="field-error" data-error-for="first_name">
+                            {% if errors and errors.first_name %}{{ errors.first_name }}{% endif %}
+                        </div>
+                    </div>
+
+                    <div>
+                        <div class="nachname">Nachname</div>
+                        <input type="text" class="text-input-3" name="last_name" placeholder="Mustermann"
+                            autocomplete="family-name" value="{{ (form.last_name if form else '')|e }}">
+                        <div class="field-error" data-error-for="last_name">
+                            {% if errors and errors.last_name %}{{ errors.last_name }}{% endif %}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="mail-adresse">Mail-Adresse</div>
+                    <!-- ✅ type="text" statt email => kein Browser-eigenes Email-Gemecker -->
+                    <input type="text" class="text-input-1" name="email" placeholder="max@gso.schule.koeln"
+                        autocomplete="email" value="{{ (form.email if form else '')|e }}">
+                    <div class="field-error" data-error-for="email">
+                        {% if errors and errors.email %}{{ errors.email }}{% endif %}
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <div class="passwort">Passwort</div>
+                    <input type="password" class="text-input-2" name="password" placeholder="***********"
+                        autocomplete="new-password">
+                    <div class="field-error" data-error-for="password">
+                        {% if errors and errors.password %}
+                        {% if errors.password is string %}
+                        {{ errors.password }}
+                        {% else %}
+                        {# Fallback serverseitig: Liste anzeigen #}
+                        <ul class="error-list">
+                            {% for e in errors.password %}
+                            <li>{{ e }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+
+                <button class="button-1" style="margin-top: 0.5rem;" type="submit">
+                    Registrieren
+                </button>
+            </form>
+
+            <div class="divider-container">
+                <div class="horizontal-line-2"></div>
+                <div class="rectangle-2">Oder</div>
+                <div class="horizontal-line-2"></div>
+            </div>
+
+            <div class="du-hast-schon-einen-account-hier-einloggen">
+                Du hast schon einen Account?
+                <a class="footer-link" href="{{ url_for('auth.login_form') }}">Hier einloggen</a>
+            </div>
+        </div>
+    </div>
+
+    <!-- JS als externe Datei -->
+    <script>
+        (() => {
+            const form = document.getElementById('register-form');
+            if (!form) return;
+
+            // Dirty tracking: Validierung erst nach "Benutzer hat Feld verändert" UND "blur"
+            const dirty = new Set();
+            const nameRegex = /^[A-Za-zÄÖÜäöüß\- ]+$/;
+
+            function qs(sel) { return form.querySelector(sel); }
+
+            function clearAllErrors() {
+                form.querySelectorAll('.field-error').forEach(el => el.textContent = '');
+                form.querySelectorAll('.is-invalid').forEach(el => el.classList.remove('is-invalid'));
+            }
+
+            function clearFieldError(field) {
+                const input = qs(`[name="${field}"]`);
+                const box = qs(`.field-error[data-error-for="${field}"]`);
+                if (input) input.classList.remove('is-invalid');
+                if (box) box.textContent = '';
+            }
+
+            function setFieldError(field, message) {
+                const input = qs(`[name="${field}"]`);
+                const box = qs(`.field-error[data-error-for="${field}"]`);
+                if (input) input.classList.add('is-invalid');
+                if (!box) return;
+
+                if (Array.isArray(message)) {
+                    box.innerHTML =
+                        '<ul class="error-list">' +
+                        message.map(m => `<li>${escapeHtml(m)}</li>`).join('') +
+                        '</ul>';
+                } else {
+                    box.textContent = message;
+                }
+            }
+
+            function escapeHtml(str) {
+                return String(str)
+                    .replaceAll('&', '&amp;')
+                    .replaceAll('<', '&lt;')
+                    .replaceAll('>', '&gt;')
+                    .replaceAll('"', '&quot;')
+                    .replaceAll("'", '&#039;');
+            }
+
+            // Feldvalidierung (Frontend, nur UX)
+            function validateField(fieldName) {
+                const raw = (qs(`[name="${fieldName}"]`)?.value ?? '');
+                const value = raw.trim();
+                clearFieldError(fieldName);
+
+                if (fieldName === 'school_class_id') {
+                    if (!value) return "Bitte wähle eine Klasse aus.";
+                    return null;
+                }
+
+                if (fieldName === 'first_name') {
+                    if (!value) return "Vorname ist erforderlich.";
+                    if (!nameRegex.test(value)) return "Nur Buchstaben (ggf. Leerzeichen/Bindestrich) erlaubt.";
+                    return null;
+                }
+
+                if (fieldName === 'last_name') {
+                    if (!value) return "Nachname ist erforderlich.";
+                    if (!nameRegex.test(value)) return "Nur Buchstaben (ggf. Leerzeichen/Bindestrich) erlaubt.";
+                    return null;
+                }
+
+                if (fieldName === 'email') {
+                    if (!value) return "E-Mail ist erforderlich.";
+                    const lower = value.toLowerCase();
+                    if (!lower.includes("@") || lower.startsWith("@") || lower.endsWith("@")) {
+                        return "Bitte eine gültige E-Mail-Adresse eingeben.";
+                    }
+                    if (!lower.endsWith("@gso.schule.koeln")) {
+                        return "Bitte nutze deine GSO E-Mail-Adresse (@gso.schule.koeln).";
+                    }
+                    return null;
+                }
+
+                if (fieldName === 'password') {
+                    if (!value) return "Passwort ist erforderlich.";
+                    const msgs = [];
+                    if (value.length < 8) msgs.push("Mindestens 8 Zeichen.");
+                    if (!/[a-z]/.test(value)) msgs.push("Mindestens ein Kleinbuchstabe.");
+                    if (!/[A-Z]/.test(value)) msgs.push("Mindestens ein Großbuchstabe.");
+                    if (!/[0-9]/.test(value)) msgs.push("Mindestens eine Zahl.");
+                    if (!/[^A-Za-z0-9]/.test(value)) msgs.push("Mindestens ein Sonderzeichen.");
+                    if (msgs.length) return msgs;
+                    return null;
+                }
+
+                return null;
+            }
+
+            function validateAllFields() {
+                const fields = ['school_class_id', 'first_name', 'last_name', 'email', 'password'];
+                const errors = {};
+                for (const f of fields) {
+                    const err = validateField(f);
+                    if (err) errors[f] = err;
+                }
+                return errors;
+            }
+
+            // Dirty setzen bei input/change, aber NICHT validieren
+            form.querySelectorAll('input, select').forEach(el => {
+                const name = el.getAttribute('name');
+                if (!name) return;
+
+                el.addEventListener('input', () => dirty.add(name));
+                el.addEventListener('change', () => dirty.add(name));
+
+                // Validierung beim Verlassen, nur wenn dirty
+                el.addEventListener('blur', () => {
+                    if (!dirty.has(name)) return;
+                    const err = validateField(name);
+                    if (err) setFieldError(name, err);
+                });
+            });
+
+            // Submit: alle Fehler auf einmal, ohne Reload
+            form.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                clearAllErrors();
+
+                // 1) Frontend: alle prüfen => alle Fehler anzeigen
+                const clientErrors = validateAllFields();
+                if (Object.keys(clientErrors).length) {
+                    for (const [field, msg] of Object.entries(clientErrors)) {
+                        setFieldError(field, msg);
+                    }
+                    return;
+                }
+
+                // 2) Backend (Unique, DB, Klasse existiert etc.)
+                try {
+                    const res = await fetch(form.action, {
+                        method: 'POST',
+                        body: new FormData(form),
+                        headers: { 'X-Requested-With': 'fetch' }
+                    });
+
+                    const text = await res.text();
+                    let data = {};
+                    try {
+                        data = JSON.parse(text);
+                    } catch (e) {
+                        // Server hat HTML zurückgegeben (z.B. 500 Debug-Seite)
+                        console.error("Server returned non-JSON:", res.status, text);
+                        alert("Serverfehler (" + res.status + "). Siehe Konsole/Network Response.");
+                        return;
+                    }
+
+                    if (!res.ok) {
+                        if (data && data.errors) {
+                            for (const [field, msg] of Object.entries(data.errors)) {
+                                setFieldError(field, msg);
+                            }
+                        } else {
+                            alert("Unbekannter Fehler beim Registrieren.");
+                        }
+                        return;
+                    }
+
+                    if (data.redirect) {
+                        window.location.href = data.redirect;
+                    } else {
+                        window.location.reload();
+                    }
+                } catch (err) {
+                    console.error(err);
+                    alert("Netzwerkfehler. Bitte versuche es erneut.");
+                }
+            });
+        })();
+    </script>
+</body>
+
+</html>

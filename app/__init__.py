@@ -14,7 +14,10 @@ def create_app():
 
     # DB
     db.init_app(app)
+    
     migrate.init_app(app, db)
+    login_manager.init_app(app)
+    login_manager.login_view = "auth.login_form"
 
     # Modelle (für Alembic / Mapper)
     from app.models.user import User
@@ -29,6 +32,14 @@ def create_app():
     from app.models.user_consent import UserConsent
     from app.models.audit_log import AuditLog
     from app.models.report import Report
+    from app.models.school_class import SchoolClass
+
+    # Blueprints registrieren
+    from app.routes.groups import groups_bp
+    app.register_blueprint(groups_bp)
+
+    from app.routes.auth import auth_bp
+    app.register_blueprint(auth_bp)
 
     # Blueprint
     from app.routes.groups import groups_bp
