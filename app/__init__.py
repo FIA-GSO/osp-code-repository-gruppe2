@@ -8,6 +8,8 @@ from flask import render_template
 
 def create_app():
 
+    print("create app called")
+
     base_dir = os.path.abspath(os.path.dirname(__file__))
 
     app = Flask(
@@ -17,18 +19,18 @@ def create_app():
         static_url_path="/static"
     )
     
-    print("STATIC FOLDER:", app.static_folder)
-    print("TEMPLATE FOLDER:", app.template_folder)
+    # print("STATIC FOLDER:", app.static_folder)
+    # print("TEMPLATE FOLDER:", app.template_folder)
 
-    print("SQLALCHEMY_DATABASE_URI =", app.config.get("SQLALCHEMY_DATABASE_URI"))
-    print("INSTANCE PATH =", app.instance_path)
+    # print("SQLALCHEMY_DATABASE_URI =", app.config.get("SQLALCHEMY_DATABASE_URI"))
+    # print("INSTANCE PATH =", app.instance_path)
 
-    print("Template search path:", app.jinja_loader.searchpath)
+    # print("Template search path:", app.jinja_loader.searchpath)
     from config import Config
     
-    print("CONFIG FILE USED:", cfg.__file__)
-    print("CONFIG CLASS FROM:", Config.__module__)
-    print("Config.SQLALCHEMY_DATABASE_URI attr:", getattr(Config, "SQLALCHEMY_DATABASE_URI", "MISSING"))
+    # print("CONFIG FILE USED:", cfg.__file__)
+    # print("CONFIG CLASS FROM:", Config.__module__)
+    # print("Config.SQLALCHEMY_DATABASE_URI attr:", getattr(Config, "SQLALCHEMY_DATABASE_URI", "MISSING"))
 
     app.config.from_object(Config)
 
@@ -60,7 +62,7 @@ def create_app():
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp)
 
-    from.routes.profile import profile_bp
+    from app.routes.profile import profile_bp
     app.register_blueprint(profile_bp)
 
     # Root -> Login

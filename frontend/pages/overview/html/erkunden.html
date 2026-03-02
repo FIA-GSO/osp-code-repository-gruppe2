@@ -36,7 +36,7 @@
         </header>
 
         <nav class="nav-controls">
-            <a href="{{ url_for('groups.explore') }}" class="icon-link" title="Neue Gruppe erstellen">
+            <a href="{{ url_for('groups.new_group') }}" class="icon-link" title="Neue Gruppe erstellen">
                 <svg class="add-circle-outline-icon-1" viewBox="0 0 24 24">
                     <path
                         d="M13 7h-2v4H7v2h4v4h2v-4h4v-2h-4V7zm-1-5C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 18c-4.41 0-8-3.59-8-8s3.59-8 8-8 8 3.59 8 8-3.59 8-8 8z" />
@@ -44,14 +44,17 @@
             </a>
 
             <div class="btn-group">
-                <a href="my-teams.html">
-                    <button class="tab-inactive">
+                <a href="{{ url_for('groups.my_teams') }}">
+                    <button class="{{ 'tab-active' if request.endpoint == 'groups.my_teams' else 'tab-inactive' }}">
                         <span class="heading-1">Meine Teams</span>
                     </button>
                 </a>
-                <button class="tab-active">
-                    <span class="heading-1">Erkunden</span>
-                </button>
+
+                <a href="{{ url_for('groups.explore') }}">
+                    <button class="{{ 'tab-active' if request.endpoint == 'groups.explore' else 'tab-inactive' }}">
+                        <span class="heading-1">Erkunden</span>
+                    </button>
+                </a>
             </div>
         </nav>
 
