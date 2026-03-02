@@ -9,6 +9,9 @@ from app.models.school_class import SchoolClass
 
 auth_bp = Blueprint("auth", __name__)
 
+GSO_DOMAIN = "@gso.schule.koeln"
+MIN_PW_LEN = 8
+
 
 def is_fetch_request() -> bool:
     """Erkennt AJAX/fetch Requests aus unserem Frontend."""
@@ -49,6 +52,31 @@ def validate_password(pw: str) -> list[str]:
     return errors
 
 
+
+def validate_login_inputs(email: str, password: str) -> dict:
+    errors = {}
+
+    # Email required + basic plausibility + domain
+    if not email:
+        errors["email"] = "E-Mail ist erforderlich."
+    else:
+        lower = email.lower()
+        # minimale Plausi (nicht zu streng, Login ist kein Register)
+        if "@" not in lower or lower.startswith("@") or lower.endswith("@"):
+            errors["email"] = "Bitte eine gültige E-Mail-Adresse eingeben."
+        elif not lower.endswith(GSO_DOMAIN):
+            errors["email"] = f"Bitte nutze deine GSO E-Mail-Adresse ({GSO_DOMAIN})."
+
+    # Password required + min length
+    if not password:
+        errors["password"] = "Passwort ist erforderlich."
+    elif len(password) < MIN_PW_LEN:
+        errors["password"] = f"Das Passwort muss mindestens {MIN_PW_LEN} Zeichen lang sein."
+
+    return errors
+
+
+
 @auth_bp.route("/login", methods=["GET", "POST"])
 def login_form():
     if request.method == "POST":
@@ -56,14 +84,25 @@ def login_form():
         password = request.form.get("password") or ""
         remember = bool(request.form.get("remember"))
 
+        # Optional: wenn du wirklich jeden Submit versuchen willst (auch leer),
+        # lass es wie hier. Kein Feldfehler, nur generisch.
         user = User.query.filter_by(email=email).first()
         if user and check_password_hash(user.password, password):
             login_user(user, remember=remember)
             return redirect(url_for("groups.group_list"))
 
-        flash("Login fehlgeschlagen.", "error")
+        # ❗ Nur EIN Fehlertext, immer gleich
+        return render_template(
+            "login/html/login.html",
+            errors={"general": "E-Mail oder Passwort ist falsch."},
+            form={"email": email}
+        ), 401
 
     return render_template("login/html/login.html")
+
+
+
+
 
 
 @auth_bp.route("/register", methods=["GET", "POST"])
@@ -155,14 +194,15 @@ def register_form():
     )
     db.session.add(user)
     db.session.commit()
-
     # Erfolg: JSON redirect oder normaler redirect
     if is_fetch_request():
-        return jsonify({"ok": True, "redirect": url_for("auth.login_form")}), 200
+        return jsonify({"ok": True, "redirect": url_for("auth.register_success")}), 200
 
-    flash("Registrierung erfolgreich! Bitte logge dich ein.", "success")
-    return redirect(url_for("auth.login_form"))
+    return redirect(url_for("auth.register_success"))
 
+@auth_bp.route("/registerSuccess", methods=["GET"])
+def register_success():
+    return render_template("registerSuccess/html/registerSuccess.html")
 
 @auth_bp.route("/logout")
 def logout():

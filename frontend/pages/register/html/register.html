@@ -28,14 +28,6 @@
         <div class="content-column">
             <div class="registrieren">Registrieren</div>
 
-            <!-- Flash (optional, z.B. Erfolgsmeldungen) -->
-            {% with messages = get_flashed_messages(with_categories=true) %}
-            {% if messages %}
-            {% for category, msg in messages %}
-            <div class="flash {{ category }}">{{ msg }}</div>
-            {% endfor %}
-            {% endif %}
-            {% endwith %}
 
             <div class="registriere-dich-mit-deiner-gso-email-auf-lerngrup">
                 Registriere dich mit deiner GSO-Email auf LerngruppenTool!
@@ -49,7 +41,7 @@
             </div>
 
             <!-- ✅ novalidate verhindert Browser Tooltips ("Füllen Sie dieses Feld aus.") -->
-            <form id="register-form" method="POST" action="{{ url_for('auth.register_form') }}" novalidate>
+            <form id="register-form" method="POST" action="{{ url_for('auth.register_form') }}" novalidate onkeydown="return event.key !== 'Enter';">
                 <div class="input-group">
                     <select class="select-1" name="school_class_id" style="width: 100%;">
                         <option value="" disabled {% if not (form and form.school_class_id) %}selected{% endif %}>Klasse

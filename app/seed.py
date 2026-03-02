@@ -21,7 +21,7 @@ def seed_users():
     user = User(
         user_id=uuid.uuid4().bytes,
         email=user_email,
-        password=generate_password_hash("test123"),
+        password=generate_password_hash("Test1234!"),
         first_name="Max",
         last_name="Mustermann",
         role="user",
@@ -31,7 +31,7 @@ def seed_users():
 
     db.session.add(user)
     db.session.commit()
-    print("✅ Admin-User erstellt (max.mustermann@gso.schule.koeln / test123)")
+    print("✅ Admin-User erstellt (max.mustermann@gso.schule.koeln)")
 
 
 def seed_school_classes():
@@ -63,7 +63,7 @@ def seed_admin_user():
     admin = User(
         user_id=uuid.uuid4().bytes,
         email=admin_email,
-        password=generate_password_hash("admin123"),
+        password=generate_password_hash("Admin1234!"),
         first_name="Admin",
         last_name="User",
         role="admin",
@@ -73,7 +73,7 @@ def seed_admin_user():
 
     db.session.add(admin)
     db.session.commit()
-    print("✅ Admin-User erstellt (admin@example.com / admin123)")
+    print("✅ Admin-User erstellt (admin@example.com)")
 
 
 def seed():

@@ -21,7 +21,15 @@ body {
     justify-content: center;
     align-items: center;
 }
+.field-error {
+  color: #d93025;
+  font-size: 0.9rem;
+  margin-top: 0.5rem;
+}
 
+.general-error {
+  text-align: center; /* optional */
+}
 /* MOBILE FIRST - Base Styles für Handy */
 .rectangle-1 {
     width: 100%;
