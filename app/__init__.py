@@ -19,6 +19,10 @@ def create_app():
         static_folder=os.path.join(base_dir, "..", "frontend", "pages"),
         static_url_path="/static"
     )
+    
+    print("STATIC FOLDER:", app.static_folder)
+    print("TEMPLATE FOLDER:", app.template_folder)
+
     print("SQLALCHEMY_DATABASE_URI =", app.config.get("SQLALCHEMY_DATABASE_URI"))
     print("INSTANCE PATH =", app.instance_path)
 
