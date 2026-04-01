@@ -1,10 +1,105 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gruppeneinstellungen</title>
+    <link rel="stylesheet" href="../css/styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&family=Source+Sans+3:wght@400;500;700&display=swap" rel="stylesheet">
 </head>
 <body>
+
+<div class="app-container">
+
+    <header>
+        <div class="header-top">
+            <svg class="account-circle-icon-1" viewBox="0 0 24 24">
+                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm0 3c1.66 0 3 1.34 3 3s-1.34 3-3 3-3-1.34-3-3 1.34-3 3-3zm0 14.2c-2.5 0-4.71-1.28-6-3.22.03-1.99 4-3.08 6-3.08 1.99 0 5.97 1.09 6 3.08-1.29 1.94-3.5 3.22-6 3.22z"/>
+            </svg>
+            <button class="button-5">Ausloggen</button>
+        </div>
+
+        <div class="lerngruppentool-1">LerngruppenTool</div>
+
+        <div class="header-nav">
+            <div class="object-1">
+                <svg class="plain-svg-1" viewBox="0 0 24 24">
+                    <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z"/>
+                </svg>
+                Zurück
+            </div>
+            <div class="teamname">Teamname</div>
+        </div>
+    </header>
+
+    <hr class="divider">
+
+    <main>
+
+        <div class="tab-row">
+            <div class="rectangle-2 tab-box">
+                <span class="heading-2">Teammitglieder</span>
+            </div>
+            <div class="rectangle-2 tab-box">
+                <span class="heading-2">Chat</span>
+            </div>
+            <div class="rectangle-1 tab-box">
+                <span class="einstellungen">Einstellungen</span>
+            </div>
+        </div>
+
+        <h1 class="gruppeneinstellungen">Gruppeneinstellungen</h1>
+
+        <div class="form-group">
+            <label class="teamnamen-bearbeiten">Teamnamen bearbeiten</label>
+            <input type="text" class="text-input-1" placeholder="Teamname">
+        </div>
+
+        <div class="form-group">
+            <label class="max-teammitglieder">Max. Teammitglieder</label>
+            <div class="stepper-row">
+                <input type="number" class="stepper-input-2" value="5">
+                <input type="number" class="stepper-input-3" value="20">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="beitrittsart-ausw-hlen-1">Beitrittsart auswählen</label>
+            <div class="radio-container">
+                <label class="radio-label">
+                    <input type="radio" name="access" checked>
+                    <span class="radio-1">Frei beitreten</span>
+                </label>
+                <label class="radio-label">
+                    <input type="radio" name="access">
+                    <span class="radio-2">Nur per Einladung</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="lernziel-tags-optional-1">Lernziel-Tags (Optional)</label>
+            <input type="text" class="text-input-2" placeholder="Tags suchen/erstellen">
+        </div>
+
+        <div class="action-buttons">
+            <button class="button-2">Änderungen speichern</button>
+            <button class="button-3">Nicht speichern</button>
+        </div>
+
+        <div class="or-divider-section">
+            <div class="horizontal-line-2"></div>
+            <div class="rectangle-3">Oder</div>
+        </div>
+
+        <div class="delete-section">
+            <button class="button-1">Team löschen</button>
+        </div>
+
+    </main>
+</div>
 
 </body>
 </html>
